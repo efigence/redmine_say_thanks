@@ -13,9 +13,9 @@
 
 <% g_struct.each do |s| %>
 
-  <%= label_tag "group_perm_#{s[:id]}", s[:name] %>
+  <%= label_tag "group_managers_#{s[:id]}", s[:name] %>
 
-  <%= select_tag "settings[group_perm][#{s[:id]}][]", options_for_select(s[:users], @settings['group_perm'].try(:[], s[:id].to_s)), multiple: true, class: 'selectize', id: "group_perm_#{s[:id]}" %>
+  <%= select_tag "settings[group_managers][#{s[:id]}][]", options_for_select(s[:users], @settings['group_managers'].try(:[], s[:id].to_s)), multiple: true, class: 'selectize', id: "group_managers_#{s[:id]}" %>
 
 <% end %>
 </p>
@@ -23,14 +23,14 @@
 <h4>Time settings</h4>
 <p>
 <%= label_tag "unroll_period", "Unroll period (in days)" %>
-<%= select_tag "unroll_period", options_for_select(0..30), class: 'selectize' %>
+<%= select_tag "settings[unroll_period]", options_for_select(0..30, @settings['unroll_period']), class: 'selectize' %>
 </p>
 
 
 <h4>Permitted vote frequency</h4>
 <p>
-<%= label_tag "frequency", "Vote frequency (in days)" %>
-<%= select_tag "frequency", options_for_select(0..30), class: 'selectize' %>
+<%= label_tag "vote_frequency", "Vote frequency (in days)" %>
+<%= select_tag "settings[vote_frequency]", options_for_select(1..30, @settings['vote_frequency']), class: 'selectize' %>
 </p>
 
 <% content_for :header_tags do %>

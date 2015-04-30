@@ -14,7 +14,10 @@ Redmine::Plugin.register :redmine_say_thanks do
       # TODO: user musi nalezec do grupy ktora jest wlaczona w ustawieniach
 
   settings :default => {
-    'group_ids' => []
+    'group_ids' => [],
+    'group_managers' => {},
+    'unroll_period' => '7',
+    'vote_frequency' => '1'
   }, :partial => 'settings/say_thanks_settings'
 
 end
