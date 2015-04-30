@@ -33,7 +33,7 @@ module SayThanks
         end
 
         def next_thanks_date
-          last_thanks = sent_thanks.last
+          last_thanks = sent_thanks.persisted.last
           if last_thanks
             last_thanks.created_at.to_date + eval(Thanks.permitted_vote_frequency).day
           else

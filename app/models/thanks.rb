@@ -11,6 +11,8 @@ class Thanks < ActiveRecord::Base
 
   validate :user_can_thank_now
 
+  scope :persisted, -> { where "id IS NOT NULL" }
+
   def self.permitted_vote_frequency
     Setting.plugin_redmine_say_thanks['vote_frequency'] || '1'
   end
