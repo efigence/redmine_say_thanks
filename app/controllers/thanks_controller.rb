@@ -8,7 +8,14 @@ class ThanksController < ApplicationController
   end
 
   def create
-    @new_thanks = User.current.sent_thanks.create(thanks_params)
+    @new_thanks = User.current.sent_thanks.new(thanks_params)
+
+    if @new_thanks.save
+      flash[:success] = 'Thanks saved!'
+    else
+      binding.pry
+      flash[:error] = @new_thanks.errors.full_messages.to_sentence
+    end
     redirect_to thanks_path
   end
 
