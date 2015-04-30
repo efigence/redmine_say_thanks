@@ -5,6 +5,18 @@ Redmine::Plugin.register :redmine_say_thanks do
   version '0.0.1'
   url 'https://github.com/efigence/redmine_say_thanks'
   author_url 'https://github.com/efigence'
+
+  menu :top_menu,
+      :thanks,
+      { :controller => 'thanks', :action => 'index' },
+      :caption => 'Thanks',
+      :if => Proc.new { User.current.logged? }
+      # TODO: user musi nalezec do grupy ktora jest wlaczona w ustawieniach
+
+  settings :default => {
+    'group_ids' => []
+  }, :partial => 'settings/say_thanks_settings'
+
 end
 
 ActionDispatch::Callbacks.to_prepare do

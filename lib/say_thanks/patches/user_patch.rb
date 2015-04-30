@@ -11,6 +11,8 @@ module SayThanks
           has_many :sent_thanks,     class_name: 'Thanks', foreign_key: :sender_id
           has_many :received_thanks, class_name: 'Thanks', foreign_key: :receiver_id
 
+          scope :thankable, -> { all }
+
         end
       end
       module InstanceMethods

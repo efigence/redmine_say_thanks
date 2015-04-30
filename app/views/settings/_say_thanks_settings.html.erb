@@ -1,0 +1,45 @@
+<h4>Groups taking part in say thanks</h4>
+<p>
+<%= label_tag "group_ids", 'Permitted groups' %>
+<%= select_tag "settings[group_ids][]", options_from_collection_for_select(Group.all, 'id', 'lastname', @settings['group_ids']), :multiple => true, :class => 'selectize', :id => "group_ids" %>
+
+</p>
+
+
+<h4>Group leaders</h4>
+<p>
+
+<% g_struct = Group.all.map{ |g| { :id => g.id, :name => g.lastname, :users => g.users.pluck(:login, :id) }} %>
+
+<% g_struct.each do |s| %>
+
+  <%= label_tag "group_perm_#{s[:id]}", s[:name] %>
+
+  <%= select_tag "settings[group_perm][#{s[:id]}][]", options_for_select(s[:users], @settings['group_perm'].try(:[], s[:id].to_s)), multiple: true, class: 'selectize', id: "group_perm_#{s[:id]}" %>
+
+<% end %>
+</p>
+
+<h4>Time settings</h4>
+<p>
+<%= label_tag "unroll_period", "Unroll period (in days)" %>
+<%= select_tag "unroll_period", options_for_select(0..30), class: 'selectize' %>
+</p>
+
+
+<h4>Permitted vote frequency</h4>
+<p>
+<%= label_tag "frequency", "Vote frequency (in days)" %>
+<%= select_tag "frequency", options_for_select(0..30), class: 'selectize' %>
+</p>
+
+<% content_for :header_tags do %>
+  <%= javascript_include_tag 'selectize.min.js',   :plugin => 'redmine_say_thanks' %>
+  <%= stylesheet_link_tag 'selectize.default.css', :plugin => 'redmine_say_thanks' %>
+<% end %>
+
+<%= javascript_tag do %>
+  $('.selectize').selectize();
+
+  $('.settings').removeClass('tabular');
+<% end %>
