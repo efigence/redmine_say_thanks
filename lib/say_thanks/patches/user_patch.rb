@@ -17,7 +17,7 @@ module SayThanks
 
           scope :thankable, lambda {
             permitted_group_ids = Setting.plugin_redmine_say_thanks['group_ids'] || []
-            in_groups(permitted_group_ids)
+            in_groups(permitted_group_ids).where.not(id: User.current.id)
           }
 
         end
