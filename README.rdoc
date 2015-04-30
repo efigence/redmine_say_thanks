@@ -1,3 +1,0 @@
-= say_thanks
-
-Description goes here
