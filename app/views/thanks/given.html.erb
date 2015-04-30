@@ -1,3 +1,33 @@
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'thanks.css', :plugin => 'redmine_say_thanks' %>
+<% end %>
+
 <%= render 'nav' %>
 
-GIVEN
+<h3>Given thanks</h1>
+
+
+<table class="list" style="width:40%;">
+  <thead>
+    <tr>
+      <th>Given to</th>
+      <th>Date</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @thanks.each do |thank| %>
+      <tr class="<%= 'unrolled' if thank.unrolled? %>">
+        <td><%= thank.receiver.to_s %></td>
+        <td><%= thank.created_at.strftime('%d-%m-%Y') %></td>
+        <td><%= thank.status %></td>
+        <td class="buttons">
+          <% if thank.can_be_unrolled? %>
+            <%= link_to 'unroll', unroll_thank_path(thank), :data => {:confirm => 'You sure to unroll?'}, :method => :put, :class => 'icon icon-del' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

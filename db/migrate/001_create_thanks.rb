@@ -3,7 +3,7 @@ class CreateThanks < ActiveRecord::Migration
     create_table :thanks do |t|
       t.integer :sender_id, index: true
       t.integer :receiver_id, index: true
-      t.string :status
+      t.integer :status, default: 0, null: false, index: true
 
       t.timestamps
     end

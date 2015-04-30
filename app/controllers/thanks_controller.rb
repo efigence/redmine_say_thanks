@@ -15,7 +15,7 @@ class ThanksController < ApplicationController
     else
       flash[:error] = @new_thanks.errors.full_messages.to_sentence
     end
-    redirect_to new_thank_path
+    redirect_to given_thanks_path
   end
 
   def given
@@ -27,6 +27,13 @@ class ThanksController < ApplicationController
   end
 
   def destroy
+  end
+
+  def unroll
+    @thanks = Thanks.find(params[:id])
+    @thanks.unrolled!
+    flash[:notice] = 'Thanks unrolled!'
+    redirect_to given_thanks_path
   end
 
   private

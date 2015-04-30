@@ -1,3 +1,7 @@
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'thanks.css', :plugin => 'redmine_say_thanks' %>
+<% end %>
+
 <%= render 'nav' %>
 
 <h2>Say thanks!</h2>
@@ -9,7 +13,7 @@
     <%= f.submit 'Say Thanks' %>
   <% end %>
 <% else %>
-  <h3>We're sorry, you can't say thanks right now. Come back on <%= User.current.pretty_next_thanks_date %>!</h3>
+  <h3>We're sorry, you can't say thanks right now. Come back on <%= User.current.pretty_next_thanks_date %>.</h3>
 <% end %>
 <%= javascript_tag do %>
   $('.selectize').selectize();
