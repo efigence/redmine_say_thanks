@@ -24,14 +24,11 @@ class ThanksController < ApplicationController
 
   def received
     @thanks = User.current.received_thanks
-
     @points = {
-      # todo: total => rail bug or what?
-      total:    @thanks.where.not(status: 'unrolled').count,
+      total:    @thanks.where.not(status: 1).count,
       to_spend: @thanks.active.count,
       spent:    @thanks.rewarded.count
     }
-
   end
 
   def destroy
