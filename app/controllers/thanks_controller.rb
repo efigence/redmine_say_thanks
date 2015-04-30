@@ -13,7 +13,6 @@ class ThanksController < ApplicationController
     if @new_thanks.save
       flash[:success] = 'Thanks saved!'
     else
-      binding.pry
       flash[:error] = @new_thanks.errors.full_messages.to_sentence
     end
     redirect_to thanks_path

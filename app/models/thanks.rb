@@ -18,14 +18,8 @@ class Thanks < ActiveRecord::Base
   private
 
   def user_can_thank_now
-    return if sender_id.blank?
-    sender = User.find(sender_id)
-    last_thanks = sender.sent_thanks.last
-    return unless last_thanks
-    perm_freq = self.class.permitted_vote_frequency
-    # todo: zmienić na 00:00 do 00:00 za x dni
-    if last_thanks.created_at + eval(perm_freq).day > Time.now
-      errors.add(:thanks, "cannot be created more often than once in #{perm_freq} days")
+    unless sender.can_give_thanks?
+      errors.add(:base, "You can say thanks again on #{sender.pretty_next_thanks_date}")
     end
   end
 end

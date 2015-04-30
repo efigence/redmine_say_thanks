@@ -29,7 +29,20 @@ module SayThanks
         end
 
         def can_give_thanks?
-          # TODO: sprawdzamy czy oddał już głos w okresie frequency z konfiga
+          next_thanks_date <= Date.today
+        end
+
+        def next_thanks_date
+          last_thanks = sent_thanks.last
+          if last_thanks
+            last_thanks.created_at.to_date + eval(Thanks.permitted_vote_frequency).day
+          else
+            Date.today
+          end
+        end
+
+        def pretty_next_thanks_date
+          next_thanks_date.strftime('%d %B, %Y')
         end
 
         def can_manage_thanks?
