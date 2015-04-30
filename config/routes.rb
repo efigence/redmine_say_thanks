@@ -1,6 +1,8 @@
-# Plugin's routes
-# See: http://guides.rubyonrails.org/routing.html
-# get '/thanks', :to => 'thanks#index'
+resources :thanks, only: [:new, :create, :destroy] do
+  collection do
+    get 'given' => "thanks#given"
+    get 'received' => "thanks#received"
+  end
+end
 
-
-resources :thanks
+get 'thanks' => "thanks#new"

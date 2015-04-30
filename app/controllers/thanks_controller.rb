@@ -3,7 +3,7 @@ class ThanksController < ApplicationController
 
   before_action :permitted?
 
-  def index
+  def new
     @new_thanks = User.current.sent_thanks.new
   end
 
@@ -15,7 +15,15 @@ class ThanksController < ApplicationController
     else
       flash[:error] = @new_thanks.errors.full_messages.to_sentence
     end
-    redirect_to thanks_path
+    redirect_to new_thank_path
+  end
+
+  def given
+    @thanks = User.current.sent_thanks
+  end
+
+  def received
+    @thanks = User.current.received_thanks
   end
 
   def destroy

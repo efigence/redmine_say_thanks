@@ -1,8 +1,8 @@
 <div class="tabs">
   <ul>
-    <li><%= link_to 'Say thanks', '#', class: 'selected' %></li>
-    <li><%= link_to 'Given thanks', '#' %></li>
-    <li><%= link_to 'Received thanks', '#' %></li>
+    <li><%= link_to 'Say thanks', new_thank_path, class: action_name == 'new' ? 'selected' : nil %></li>
+    <li><%= link_to 'Given thanks', given_thanks_path, class: action_name == 'given' ? 'selected' : nil %></li>
+    <li><%= link_to 'Received thanks', received_thanks_path, class: action_name == 'received' ? 'selected' : nil %></li>
 
     <%# todo: dodatkowe linki dla managera %>
   </ul>

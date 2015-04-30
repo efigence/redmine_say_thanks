@@ -8,7 +8,7 @@ Redmine::Plugin.register :redmine_say_thanks do
 
   menu :top_menu,
       :thanks,
-      { :controller => 'thanks', :action => 'index' },
+      { :controller => 'thanks', :action => 'new' },
       :caption => 'Thanks',
       :if => Proc.new { User.current.can_access_thanks? }
 
