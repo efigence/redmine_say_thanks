@@ -10,7 +10,7 @@ Redmine::Plugin.register :redmine_say_thanks do
       :thanks,
       { :controller => 'thanks', :action => 'index' },
       :caption => 'Thanks',
-      :if => Proc.new { User.current.logged? }
+      :if => Proc.new { User.current.can_access_thanks? }
       # TODO: user musi nalezec do grupy ktora jest wlaczona w ustawieniach
 
   settings :default => {

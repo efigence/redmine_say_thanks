@@ -1,6 +1,7 @@
 class ThanksController < ApplicationController
   unloadable
 
+  before_action :permitted?
 
   def index
   end
@@ -9,5 +10,11 @@ class ThanksController < ApplicationController
   end
 
   def destroy
+  end
+
+  private
+
+  def permitted?
+    deny_access unless User.current.can_access_thanks?
   end
 end

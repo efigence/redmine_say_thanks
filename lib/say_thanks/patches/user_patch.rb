@@ -11,13 +11,20 @@ module SayThanks
           has_many :sent_thanks,     class_name: 'Thanks', foreign_key: :sender_id
           has_many :received_thanks, class_name: 'Thanks', foreign_key: :receiver_id
 
-          scope :thankable, -> { all }
+          scope :in_groups, lambda {|group_ids|
+            where("#{User.table_name}.id IN (SELECT gu.user_id FROM #{table_name_prefix}groups_users#{table_name_suffix} gu WHERE gu.group_id IN (?))", group_ids)
+          }
+
+          scope :thankable, lambda {
+            permitted_group_ids = Setting.plugin_redmine_say_thanks['group_ids'] || []
+            in_groups(permitted_group_ids)
+          }
 
         end
       end
       module InstanceMethods
 
-        def can_use_thanks_plugin?
+        def can_access_thanks?
           logged? && in_group_permitted_to_thanks?
         end
 
@@ -42,7 +49,9 @@ module SayThanks
         end
 
         def in_group_permitted_to_thanks?
-          (groups.pluck(:id).map(&:to_s) & (Setting.plugin_redmine_say_thanks['group_ids'] || [])).any?
+          permitted_group_ids = Setting.plugin_redmine_say_thanks['group_ids']
+          return false if permitted_group_ids.blank?
+          admin? || (groups.pluck(:id).map(&:to_s) & permitted_group_ids).any?
         end
       end
     end
