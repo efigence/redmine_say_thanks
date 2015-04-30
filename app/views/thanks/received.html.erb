@@ -4,4 +4,39 @@
 
 <%= render 'nav' %>
 
-RECEIVED
+
+<h1 style="margin-bottom:25px;">My points</h1>
+
+<div class="splitcontentleft" style="width:15%;">
+
+  <h4>Total points earned: <%= @points[:total] %></h4>
+  <h4>Point available: <%= @points[:to_spend] %></h4>
+  <h4>Total spent: <%= @points[:spent] %></h4>
+
+</div>
+
+<div class="splitcontentright" style="width:50%;margin-right:20%">
+
+  <table class="list"">
+    <thead>
+      <tr>
+        <th>Given by</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @thanks.each do |thank| %>
+        <tr class="<%= 'unrolled' if thank.unrolled? %>">
+          <td><%= thank.sender.to_s %></td>
+          <td><%= thank.created_at.strftime('%d-%m-%Y') %></td>
+          <td><%= thank.status %></td>
+          <td class="buttons">
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
