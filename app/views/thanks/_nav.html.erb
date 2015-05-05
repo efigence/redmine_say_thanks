@@ -3,7 +3,9 @@
     <li><%= link_to 'Say thanks', new_thank_path, class: action_name == 'new' ? 'selected' : nil %></li>
     <li><%= link_to 'My points', received_thanks_path, class: action_name == 'received' ? 'selected' : nil %></li>
     <li><%= link_to 'Given thanks', given_thanks_path, class: action_name == 'given' ? 'selected' : nil %></li>
-
-    <%# todo: dodatkowe linki dla managera %>
+    <% @manageable_groups.each do |group| %>
+      <li><%= link_to "Manager #{group.lastname} - stats", manager_thanks_path(group), class: action_name == 'management' && params[:id] == group.id.to_s ? 'selected' : nil %>
+      <li><%= link_to "Manager #{group.lastname} - points", points_thanks_path(group), class: action_name == 'points' && params[:id] == group.id.to_s ? 'selected' : nil %>
+    <% end %>
   </ul>
 </div>

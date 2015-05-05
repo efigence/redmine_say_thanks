@@ -2,6 +2,8 @@ class ThanksController < ApplicationController
   unloadable
 
   before_action :permitted?
+  before_action :check_manageable_groups
+  before_action :find_and_authorize_group, only: [:management, :points]
 
   def new
     @new_thanks = User.current.sent_thanks.new
@@ -11,11 +13,12 @@ class ThanksController < ApplicationController
     @new_thanks = User.current.sent_thanks.new(thanks_params)
 
     if @new_thanks.save
-      flash[:success] = 'Thanks saved!'
+      flash[:notice] = 'Thanks saved!'
+      redirect_to given_thanks_path
     else
       flash[:error] = @new_thanks.errors.full_messages.to_sentence
+      render :new
     end
-    redirect_to given_thanks_path
   end
 
   def given
@@ -31,6 +34,20 @@ class ThanksController < ApplicationController
     }
   end
 
+  def management
+    @users = @group.users
+    @thanks = Thanks.involving(@users.pluck(:id)).includes(:sender, :receiver)
+    filter_params.each do |key, value|
+      @thanks = @thanks.public_send(key, value) if value.present?
+    end
+  end
+
+  def points
+    @selectable_users = @group.users.select(:id, :firstname, :lastname)
+    @users_with_points = @group.users.with_thanks_stats
+    @users_with_points = @users_with_points.where(id: params[:user_id]) if params[:user_id]
+  end
+
   def destroy
   end
 
@@ -43,8 +60,22 @@ class ThanksController < ApplicationController
 
   private
 
+  def find_and_authorize_group
+    @group = Group.find(params[:id])
+    deny_access unless @manageable_groups.include?(@group)
+  end
+
+  def filter_params
+    params.slice(:sent_by, :received_by, :status, :date_created)
+  end
+
   def thanks_params
     params.require(:thanks).permit(:receiver_id)
+  end
+
+  def check_manageable_groups
+    manageable_groups_ids = User.current.manageable_thanks_group_ids
+    @manageable_groups = Group.where(id: manageable_groups_ids)
   end
 
   def permitted?

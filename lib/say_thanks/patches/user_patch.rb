@@ -20,6 +20,23 @@ module SayThanks
             in_groups(permitted_group_ids).where.not(id: User.current.id)
           }
 
+          scope :with_thanks_stats, lambda {
+            end_wait_date = Thanks.waiting_period_end.to_formatted_s(:db)
+
+            select('users.id, users.firstname, users.lastname').
+            select('COUNT(distinct s.id) sent').
+            select('COUNT(distinct r_active.id) active').
+            select('COUNT(distinct r_rewarded.id) rewarded').
+            select('COUNT(distinct r_unrolled.id) unrolled').
+            select('COUNT(distinct r_waiting.id) waiting').
+            joins('LEFT OUTER JOIN thanks s ON s.sender_id = users.id').
+            joins("LEFT OUTER JOIN thanks r_active ON r_active.receiver_id = users.id AND r_active.status = 0 AND r_active.created_at <= '#{end_wait_date}'").
+            joins('LEFT OUTER JOIN thanks r_rewarded ON r_rewarded.receiver_id = users.id AND r_rewarded.status = 2').
+            joins('LEFT OUTER JOIN thanks r_unrolled ON r_unrolled.receiver_id = users.id AND r_unrolled.status = 1').
+            joins("LEFT OUTER JOIN thanks r_waiting ON r_waiting.receiver_id = users.id AND r_waiting.status = 0 AND DATE(r_waiting.created_at) > '#{end_wait_date}'").
+            group(:id)
+          }
+
         end
       end
       module InstanceMethods
@@ -45,20 +62,13 @@ module SayThanks
           next_thanks_date.strftime('%d %B, %Y')
         end
 
-        def can_manage_thanks?
-          return false unless in_group_permitted_to_thanks?
+        def manageable_thanks_group_ids
+          group_ids = groups.pluck(:id).map(&:to_s)
+          group_managers = Setting.plugin_redmine_say_thanks['group_managers'] || {}
 
-          usr_group_ids = groups.pluck(:id).map(&:to_s)
-          group_permissions = Setting.plugin_redmine_say_thanks['group_managers'] || {}
-
-          perm = false
-          usr_group_ids.each do |id|
-            if group_permissions['id'].try(:include?, id)
-              perm = true
-              break
-            end
-          end
-          perm
+          group_ids.map do |gid|
+            gid if group_managers[gid].try(:include?, id.to_s)
+          end.compact
         end
 
         def in_group_permitted_to_thanks?

@@ -26,8 +26,6 @@
 <%= select_tag "settings[unroll_period]", options_for_select(0..30, @settings['unroll_period']), class: 'selectize' %>
 </p>
 
-
-<h4>Permitted vote frequency</h4>
 <p>
 <%= label_tag "vote_frequency", "Vote frequency (in days)" %>
 <%= select_tag "settings[vote_frequency]", options_for_select(1..30, @settings['vote_frequency']), class: 'selectize' %>

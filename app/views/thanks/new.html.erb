@@ -6,14 +6,14 @@
 
 <h2>Say thanks!</h2>
 
-<% if User.current.can_give_thanks? %>
+<% if  User.current.can_give_thanks? %>
   <%= form_for @new_thanks, url: thanks_path do |f| %>
     <%= f.label 'receiver_id', 'Choose user' %>
     <%= f.select "receiver_id", options_from_collection_for_select(User.thankable, 'id', 'to_s'), :class => 'selectize', :id => "receiver_id" %>
     <%= f.submit 'Say Thanks' %>
   <% end %>
 <% else %>
-  <h3>We're sorry, you can't say thanks right now. Come back on <%= User.current.pretty_next_thanks_date %>.</h3>
+  <div class="flash error" id="flash_error">We're sorry, you can't say thanks right now. Come back on <%= User.current.pretty_next_thanks_date %>.</div>
 <% end %>
 <%= javascript_tag do %>
   $('.selectize').selectize();
