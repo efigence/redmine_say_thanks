@@ -1,9 +1,5 @@
-class ThanksController < ApplicationController
+class ThanksController < BaseThanksController
   unloadable
-
-  before_action :permitted?
-  before_action :check_manageable_groups
-  before_action :find_and_authorize_group, only: [:management, :points]
 
   def new
     @new_thanks = User.current.sent_thanks.new
@@ -33,30 +29,6 @@ class ThanksController < ApplicationController
     @paginate, @thanks = paginate @thanks.order(created_at: :desc), per_page: 20
   end
 
-  def management
-    @users = @group.users
-    @thanks = Thanks.involving(@users.pluck(:id)).includes(:sender, :receiver)
-    filter_params.each do |key, value|
-      @thanks = @thanks.public_send(key, value) if value.present?
-    end
-
-    @paginate, @thanks = paginate @thanks.order(created_at: :desc), per_page: 20
-  end
-
-  def points
-    @selectable_users = @group.users.select(:id, :firstname, :lastname)
-    @users_with_points = @group.users.with_thanks_stats
-    @users_with_points = @users_with_points.where(id: params[:received_by]) if params[:received_by]
-
-    @reward = User.current.managed_rewards.new
-  end
-
-  def rewards
-    @rewards = User.current.received_rewards.includes(:manager)
-
-    @paginate, @rewards = paginate @rewards.order(created_at: :desc), per_page: 20
-  end
-
   def unroll
     @thanks = Thanks.find(params[:id])
     @thanks.unrolled!
@@ -66,25 +38,7 @@ class ThanksController < ApplicationController
 
   private
 
-  def find_and_authorize_group
-    @group = Group.find(params[:id])
-    deny_access unless @manageable_groups.include?(@group)
-  end
-
-  def filter_params
-    params.slice(:sent_by, :received_by, :status, :date_created)
-  end
-
   def thanks_params
     params.require(:thanks).permit(:receiver_id)
-  end
-
-  def check_manageable_groups
-    manageable_groups_ids = User.current.manageable_thanks_group_ids
-    @manageable_groups = Group.where(id: manageable_groups_ids)
-  end
-
-  def permitted?
-    deny_access unless User.current.can_access_thanks?
   end
 end

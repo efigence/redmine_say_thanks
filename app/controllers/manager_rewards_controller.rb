@@ -1,4 +1,4 @@
-class ThanksRewardsController < ApplicationController
+class ManagerRewardsController < BaseThanksController
   unloadable
 
   # before_action :permitted?
