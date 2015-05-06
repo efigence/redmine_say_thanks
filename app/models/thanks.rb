@@ -3,10 +3,14 @@ class Thanks < ActiveRecord::Base
 
   enum status: [:active, :unrolled, :rewarded]
 
+  VOTE_FREQUENCY = Setting.plugin_redmine_say_thanks['vote_frequency'] || '1'
+  UNROLL_PERIOD = Setting.plugin_redmine_say_thanks['unroll_period'] || '7'
+
   attr_accessible :receiver_id, :status
 
   belongs_to :sender, class_name: 'User'
   belongs_to :receiver, class_name: 'User'
+  belongs_to :reward, class_name: 'ThanksReward'
 
   validates_presence_of :sender_id, :receiver_id
 
@@ -33,16 +37,42 @@ class Thanks < ActiveRecord::Base
     where(created_at: (date.beginning_of_day..date.end_of_day))
    }
 
-  def self.permitted_vote_frequency
-    Setting.plugin_redmine_say_thanks['vote_frequency'] || '1'
-  end
+  scope :quarantine, -> {
+    active.select(&:can_be_unrolled?)
+  }
 
-  def self.unroll_period
-    Setting.plugin_redmine_say_thanks['unroll_period'] || '7'
-  end
+  scope :to_use, -> {
+    active.order(created_at: :asc).reject(&:can_be_unrolled?)
+  }
 
   def self.waiting_period_end
-    Date.today - eval(unroll_period).days
+    Date.today - eval(UNROLL_PERIOD).days
+  end
+
+  def self.mark_as_rewarded(reward_id)
+    update_all(reward_id: reward_id, status: 2)
+  end
+
+  def self.stats
+    {
+      total:      where.not(status: 1).count,
+      to_spend:   to_use.count,
+      quarantine: quarantine.count,
+      unrolled:   unrolled.count,
+      spent:      rewarded.count
+    }
+  end
+
+  def status
+    if quarantine?
+      "quarantine"
+    else
+      super
+    end
+  end
+
+  def quarantine?
+    active? && can_be_unrolled?
   end
 
   def can_be_unrolled?
@@ -54,7 +84,7 @@ class Thanks < ActiveRecord::Base
   end
 
   def unroll_until
-    created_at.to_date + eval(self.class.unroll_period).days
+    created_at.to_date + eval(UNROLL_PERIOD).days
   end
 
   private

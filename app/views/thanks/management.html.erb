@@ -16,13 +16,15 @@
         <th>Given to</th>
         <th>Given by</th>
         <th>Status</th>
-        <th>Date</th>
+        <th>Date created</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       <% @thanks.each do |thank| %>
-        <tr class="<%= 'unrolled' if thank.unrolled? %>">
+        <% css_class = cycle 'odd', 'even' %>
+        <% css_class << ' unrolled' if thank.unrolled? %>
+        <tr class="<%= css_class %>">
           <td><%= thank.receiver.to_s %></td>
           <td><%= thank.sender.to_s %></td>
           <td><%= thank.status %></td>
@@ -32,6 +34,7 @@
       <% end %>
     </tbody>
   </table>
+  <p class="pagination" style="padding-top:12px;"><%= pagination_links_full @paginate %></p>
 </div>
 
 <div class="splitcontentright" style="width:20%;">

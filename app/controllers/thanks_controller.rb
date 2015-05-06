@@ -23,15 +23,14 @@ class ThanksController < ApplicationController
 
   def given
     @thanks = User.current.sent_thanks
+    @points = @thanks.stats
+    @paginate, @thanks = paginate @thanks.order(created_at: :desc), per_page: 20
   end
 
   def received
     @thanks = User.current.received_thanks
-    @points = {
-      total:    @thanks.where.not(status: 1).count,
-      to_spend: @thanks.active.count,
-      spent:    @thanks.rewarded.count
-    }
+    @points = @thanks.stats
+    @paginate, @thanks = paginate @thanks.order(created_at: :desc), per_page: 20
   end
 
   def management
@@ -40,15 +39,22 @@ class ThanksController < ApplicationController
     filter_params.each do |key, value|
       @thanks = @thanks.public_send(key, value) if value.present?
     end
+
+    @paginate, @thanks = paginate @thanks.order(created_at: :desc), per_page: 20
   end
 
   def points
     @selectable_users = @group.users.select(:id, :firstname, :lastname)
     @users_with_points = @group.users.with_thanks_stats
-    @users_with_points = @users_with_points.where(id: params[:user_id]) if params[:user_id]
+    @users_with_points = @users_with_points.where(id: params[:received_by]) if params[:received_by]
+
+    @reward = User.current.managed_rewards.new
   end
 
-  def destroy
+  def rewards
+    @rewards = User.current.received_rewards.includes(:manager)
+
+    @paginate, @rewards = paginate @rewards.order(created_at: :desc), per_page: 20
   end
 
   def unroll

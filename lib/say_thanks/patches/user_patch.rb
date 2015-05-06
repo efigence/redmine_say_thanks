@@ -11,6 +11,9 @@ module SayThanks
           has_many :sent_thanks,     class_name: 'Thanks', foreign_key: :sender_id
           has_many :received_thanks, class_name: 'Thanks', foreign_key: :receiver_id
 
+          has_many :managed_rewards, class_name: 'ThanksReward', foreign_key: :manager_id
+          has_many :received_rewards, class_name: 'ThanksReward', foreign_key: :user_id
+
           scope :in_groups, lambda {|group_ids|
             where("#{User.table_name}.id IN (SELECT gu.user_id FROM #{table_name_prefix}groups_users#{table_name_suffix} gu WHERE gu.group_id IN (?))", group_ids)
           }
@@ -52,7 +55,7 @@ module SayThanks
         def next_thanks_date
           last_thanks = sent_thanks.persisted.last
           if last_thanks
-            last_thanks.created_at.to_date + eval(Thanks.permitted_vote_frequency).day
+            last_thanks.created_at.to_date + eval(Thanks::VOTE_FREQUENCY).days
           else
             Date.today
           end
@@ -65,10 +68,7 @@ module SayThanks
         def manageable_thanks_group_ids
           group_ids = groups.pluck(:id).map(&:to_s)
           group_managers = Setting.plugin_redmine_say_thanks['group_managers'] || {}
-
-          group_ids.map do |gid|
-            gid if group_managers[gid].try(:include?, id.to_s)
-          end.compact
+          group_ids.select { |gid| group_managers[gid].try(:include?, id.to_s) }
         end
 
         def in_group_permitted_to_thanks?

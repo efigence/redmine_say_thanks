@@ -4,30 +4,46 @@
 
 <%= render 'nav' %>
 
-<h3>Given thanks</h1>
+<h2>Given thanks</h2>
+<div class="splitcontentleft" style="width:15%;margin-top:15px;">
 
 
-<table class="list" style="width:40%;">
-  <thead>
-    <tr>
-      <th>Given to</th>
-      <th>Date</th>
-      <th>Status</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @thanks.each do |thank| %>
-      <tr class="<%= 'unrolled' if thank.unrolled? %>">
-        <td><%= thank.receiver.to_s %></td>
-        <td><%= thank.created_at.strftime('%d-%m-%Y') %></td>
-        <td><%= thank.status %></td>
-        <td class="buttons">
-          <% if thank.can_be_unrolled? %>
-            <%= link_to 'unroll', unroll_thank_path(thank), :data => {:confirm => 'You sure to unroll?'}, :method => :put, :class => 'icon icon-del' %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <h4>Total given: <%= @points[:total] %></h4>
+  <h4>To spend: <%= @points[:to_spend] %></h4>
+  <h4>In quarantine: <%= @points[:quarantine] %></h4>
+  <h4>Unrolled: <%= @points[:unrolled] %></h4>
+  <h4>Spent: <%= @points[:spent] %></h4>
+</div>
+
+<div class="splitcontentright" style="width:50%;margin-right:20%">
+  <div class="table-wrapper">
+    <h3>Points given</h3>
+    <table class="list">
+      <thead>
+        <tr>
+          <th>Given to</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @thanks.each do |thank| %>
+          <% css_class = cycle 'odd', 'even' %>
+          <% css_class << ' unrolled' if thank.unrolled? %>
+          <tr class="<%= css_class %>">
+            <td><%= thank.receiver.to_s %></td>
+            <td><%= thank.created_at.strftime('%d-%m-%Y') %></td>
+            <td><%= thank.status %></td>
+            <td class="buttons">
+              <% if thank.can_be_unrolled? %>
+                <%= link_to 'unroll', unroll_thank_path(thank), :data => {:confirm => 'You sure to unroll?'}, :method => :put, :class => 'icon icon-del' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <p class="pagination" style="padding-top:12px;"><%= pagination_links_full @paginate %></p>
+  </div>
+</div>

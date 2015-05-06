@@ -1,20 +1,31 @@
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag 'thanks.css', :plugin => 'redmine_say_thanks' %>
+  <%= javascript_include_tag 'selectize.min.js',    :plugin => 'redmine_accounting' %>
+  <%= stylesheet_link_tag 'selectize.default.css',  :plugin => 'redmine_accounting' %>
 <% end %>
 
 <%= render 'nav' %>
 
-<h2>Say thanks!</h2>
-
 <% if  User.current.can_give_thanks? %>
+
+
   <%= form_for @new_thanks, url: thanks_path do |f| %>
-    <%= f.label 'receiver_id', 'Choose user' %>
-    <%= f.select "receiver_id", options_from_collection_for_select(User.thankable, 'id', 'to_s'), :class => 'selectize', :id => "receiver_id" %>
-    <%= f.submit 'Say Thanks' %>
+
+    <fieldset class="box settings" style="max-width:30%">
+      <legend><strong>Say thanks to someone</strong></legend>
+      <p>
+        <%= f.label :receiver_id, 'Choose user' %>
+        <%= f.select :receiver_id, options_from_collection_for_select(User.thankable, 'id', 'to_s'), {}, :class => 'selectize', :autofocus => false %>
+      </p>
+      <%= f.submit 'Submit' %>
+    </fieldset>
+
   <% end %>
+
 <% else %>
   <div class="flash error" id="flash_error">We're sorry, you can't say thanks right now. Come back on <%= User.current.pretty_next_thanks_date %>.</div>
 <% end %>
 <%= javascript_tag do %>
   $('.selectize').selectize();
 <% end %>
+

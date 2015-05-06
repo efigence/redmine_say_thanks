@@ -8,34 +8,43 @@
 
 <h2>Manager panel</h2>
 
-<div class="splitcontentleft" style="width:70%;">
 
-  <table class="list">
-    <thead>
-      <tr>
-        <th>User</th>
-        <th>To use</th>
-        <th>Waiting</th>
-        <th>Rewarded</th>
-        <th>Unrolled</th>
-        <th>Sent</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users_with_points.each do |user_with_points| %>
-        <tr class="<%= cycle 'odd', 'even' %>">
-          <td><%= user_with_points.to_s %></td>
-          <td><strong><%= user_with_points.active %></strong></td>
-          <td><%= user_with_points.waiting %></td>
-          <td><%= user_with_points.rewarded %></td>
-          <td><%= user_with_points.unrolled %></td>
-          <td><%= user_with_points.sent  %></td>
-          <td class="buttons"></td>
+<div style="float:left;width:80%;">
+
+  <div style="float:left;min-width:30%">
+    <%= render 'reward_form' %>
+  </div>
+
+  <div style="float:right;min-width:65%;margin-right:40px;margin-top:8px;">
+
+    <table class="list">
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>To use</th>
+          <th>Waiting</th>
+          <th>Rewarded</th>
+          <th>Unrolled</th>
+          <th>Sent</th>
+          <th></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @users_with_points.each do |user_with_points| %>
+          <tr class="<%= cycle 'odd', 'even' %>">
+            <td><%= user_with_points.to_s %></td>
+            <td><strong><%= user_with_points.active %></strong></td>
+            <td><%= user_with_points.waiting %></td>
+            <td><%= user_with_points.rewarded %></td>
+            <td><%= user_with_points.unrolled %></td>
+            <td><%= user_with_points.sent  %></td>
+            <td class="buttons"></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
 </div>
 
 <div class="splitcontentright" style="width:20%;">
@@ -43,14 +52,14 @@
     <legend>Filters</legend>
     <%= form_tag points_thanks_path, method: :get do %>
       <p>
-        <b><%= label_tag 'user_id', 'User' %></b>
-        <%= select_tag :user_id, options_from_collection_for_select(@selectable_users, "id", "to_s", params[:user_id]), :multiple => true, :class => 'selectize-with-btn' %>
+        <b><%= label_tag :received_by, 'User' %></b>
+        <%= select_tag :received_by, options_from_collection_for_select(@selectable_users, "id", "to_s", params[:received_by]), :multiple => true, :class => 'selectize-with-btn' %>
       </p>
 
       <p><%= submit_tag l('label_search') %></p>
     <% end %>
     <div class="contextual">
-      <%= link_to l('accounting.filters.reset'), manager_thanks_path, class: "icon icon-reload" %>
+      <%= link_to l('accounting.filters.reset'), points_thanks_path, class: "icon icon-reload" %>
     </div>
   </fieldset>
 </div>

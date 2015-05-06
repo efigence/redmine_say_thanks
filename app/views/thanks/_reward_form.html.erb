@@ -1,0 +1,19 @@
+<%= form_for @reward, url: post_rewards_thanks_path do |f| %>
+  <%= error_messages_for @reward %>
+  <fieldset class="box settings">
+    <legend>Assign reward</legend>
+    <p>
+      <%= f.label :title, 'Title' %>
+      <%= f.text_field :title, :required => true, :class => 'basic-text', :style => "width:100%;" %>
+    </p>
+    <p>
+      <%= f.label :points, 'Points' %>
+      <%= f.number_field :points, :required => true, :class => 'basic-text', :style => "width:100%;", :min => 1 %>
+    </p>
+    <p>
+      <%= f.label :user_id %>
+      <%= f.select :user_id, options_from_collection_for_select(@selectable_users, "id", "to_s", params[:user_id]), {}, :class => 'selectize', style: 'margin-right:50px;' %>
+    </p>
+    <%= f.submit :save %>
+  </fieldset>
+<% end %>
