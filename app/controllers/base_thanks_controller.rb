@@ -12,4 +12,9 @@ class BaseThanksController < ApplicationController
   def permitted?
     deny_access unless User.current.can_access_thanks?
   end
+
+  def find_and_authorize_group
+    @group = Group.find(params[:group_id])
+    deny_access unless @manageable_groups.include?(@group)
+  end
 end

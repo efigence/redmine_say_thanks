@@ -1,0 +1,73 @@
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'thanks.css', :plugin => 'redmine_say_thanks' %>
+  <%= javascript_include_tag 'selectize.min.js',    :plugin => 'redmine_accounting' %>
+  <%= stylesheet_link_tag 'selectize.default.css',  :plugin => 'redmine_accounting' %>
+<% end %>
+
+<%= render 'shared/nav' %>
+
+<h2>Manager panel</h2>
+
+
+<div style="float:left;width:80%;">
+
+  <div style="float:left;min-width:30%">
+    <%= render 'reward_form' %>
+  </div>
+
+  <div style="float:right;min-width:65%;margin-right:40px;margin-top:8px;">
+
+    <table class="list">
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Title</th>
+          <th>Points used</th>
+          <th>Date</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <% @rewards.each do |reward| %>
+          <tr class="<%= cycle 'odd', 'even' %>">
+            <td><%= reward.user.to_s %></td>
+            <td><%= reward.title %></td>
+            <td><%= reward.points %></td>
+            <td><%= reward.created_at.to_s(:db) %></td>
+
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<div class="splitcontentright" style="width:20%;">
+  <fieldset>
+    <legend>Filters</legend>
+    <%= form_tag manager_rewards_path, method: :get do %>
+      <p>
+        <b><%= label_tag :received_by, 'User' %></b>
+        <%= select_tag :received_by, options_from_collection_for_select(@users, "id", "to_s", params[:received_by]), :multiple => true, :class => 'selectize-with-btn' %>
+      </p>
+
+      <p><%= submit_tag l('label_search') %></p>
+    <% end %>
+    <div class="contextual">
+      <%= link_to l('accounting.filters.reset'), manager_rewards_path, class: "icon icon-reload" %>
+    </div>
+  </fieldset>
+</div>
+
+<%= javascript_tag do %>
+$(function() {
+  $('.selectize').selectize({
+    sortField: 'text'
+  });
+  $('.selectize-with-btn').selectize({
+    plugins: ['remove_button']
+  });
+});
+<% end %>
+
