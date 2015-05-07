@@ -26,6 +26,10 @@
   <div class="flash error" id="flash_error">We're sorry, you can't say thanks right now. Come back on <%= User.current.pretty_next_thanks_date %>.</div>
 <% end %>
 <%= javascript_tag do %>
-  $('.selectize').selectize();
+$(function(){
+  var $select = $('.selectize').selectize();
+  var selectize = $select[0].selectize;
+  selectize.close();
+})
 <% end %>
 

@@ -4,29 +4,38 @@
 
 <%= render 'shared/nav' %>
 
-<h3>My Rewards</h1>
+<div class="splitcontentleft" style="width:15%;">
+  <h2 class="thanks-header">Rewards statistics</h2>
 
+  <h4>Rewards: <%= @rewards.count %></h4>
+  <h4>Points spent: <%= User.current.received_thanks.rewarded.count %></h4>
+</div>
 
-<table class="list" style="width:40%;">
-  <thead>
-    <tr>
-      <th>Reward title</th>
-      <th>Point cost</th>
-      <th>Rewarded by</th>
-      <th>Rewarded at</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @rewards.each do |reward| %>
-      <tr class="<%= cycle 'odd', 'even' %>">
-        <td><%= reward.title %></td>
-        <td><%= reward.points %></td>
-        <td><%= reward.manager.to_s %></td>
-        <td><%= reward.created_at.strftime('%d-%m-%Y') %></td>
-        <td class="buttons"></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<p class="pagination" style="padding-top:12px;"><%= pagination_links_full @paginate %></p>
+<div class="splitcontentright" style="width:50%;margin-right:20%">
+  <div class="table-wrapper">
+    <h2 class="thanks-header">Rewards listing</h2>
+    <table class="list">
+      <thead>
+        <tr>
+          <th>Reward title</th>
+          <th>Point cost</th>
+          <th>Rewarded by</th>
+          <th>Rewarded at</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @rewards.each do |reward| %>
+          <tr class="<%= cycle 'odd', 'even' %>">
+            <td><%= reward.title %></td>
+            <td><%= reward.points %></td>
+            <td><%= reward.manager.to_s %></td>
+            <td><%= reward.created_at.strftime('%d-%m-%Y') %></td>
+            <td class="buttons"></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <p class="pagination" style="padding-top:12px;"><%= pagination_links_full @paginate %></p>
+  </div>
+</div>

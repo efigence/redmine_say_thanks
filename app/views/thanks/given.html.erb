@@ -4,9 +4,8 @@
 
 <%= render 'shared/nav' %>
 
-<h2>Given thanks</h2>
-<div class="splitcontentleft" style="width:15%;margin-top:15px;">
-
+<div class="splitcontentleft" style="width:15%;">
+  <h2 class="thanks-header">Given statistics</h2>
 
   <h4>Total given: <%= @points[:total] %></h4>
   <h4>To spend: <%= @points[:to_spend] %></h4>
@@ -17,7 +16,7 @@
 
 <div class="splitcontentright" style="width:50%;margin-right:20%">
   <div class="table-wrapper">
-    <h3>Points given</h3>
+    <h2 class="thanks-header">Given points listing</h2>
     <table class="list">
       <thead>
         <tr>

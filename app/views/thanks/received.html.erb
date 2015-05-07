@@ -3,8 +3,8 @@
 <% end %>
 
 <%= render 'shared/nav' %>
-<h2>My points</h2>
-<div class="splitcontentleft" style="width:15%;margin-top:15px;">
+<div class="splitcontentleft" style="width:15%;">
+  <h2 class="thanks-header">My statistics</h2>
 
 
   <h4>Total earned: <%= @points[:total] %></h4>
@@ -18,7 +18,7 @@
 <div class="splitcontentright" style="width:50%;margin-right:20%">
 
   <div class="table-wrapper">
-    <h3>Points received</h3>
+    <h2 class="thanks-header">Received points listing</h2>
     <table class="list">
       <thead>
         <tr>

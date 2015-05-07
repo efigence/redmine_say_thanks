@@ -40,6 +40,16 @@ class ThanksRewardsTest < ActiveSupport::TestCase
     assert_equal 0, receiver.received_thanks.rewarded.count
   end
 
+  test "reward shouldn't be saved without taking any points" do
+    receiver = users(:andrew)
+    manager = users(:manager)
+    reward = manager.managed_rewards.new(user_id: receiver.id, points: 0, title: 'Reward')
+    assert_raise ActiveRecord::RecordInvalid do
+      reward.save!
+    end
+    assert_equal 0, receiver.received_thanks.rewarded.count
+  end
+
   test "user which doesn't take part in say thanks should not be rewarded" do
     receiver = users(:not_permitted)
     manager = users(:manager)
