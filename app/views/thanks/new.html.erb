@@ -27,9 +27,7 @@
 <% end %>
 <%= javascript_tag do %>
 $(function(){
-  var $select = $('.selectize').selectize();
-  var selectize = $select[0].selectize;
-  selectize.close();
+  $('.selectize').selectize().close();
 })
 <% end %>
 

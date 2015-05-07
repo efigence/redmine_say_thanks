@@ -1,8 +1,4 @@
-<% content_for :header_tags do %>
-  <%= stylesheet_link_tag 'thanks.css', :plugin => 'redmine_say_thanks' %>
-  <%= javascript_include_tag 'selectize.min.js',    :plugin => 'redmine_accounting' %>
-  <%= stylesheet_link_tag 'selectize.default.css',  :plugin => 'redmine_accounting' %>
-<% end %>
+<%= render 'shared/headers_tags' %>
 
 <%= render 'shared/nav' %>
 
@@ -71,15 +67,3 @@
     </div>
   </fieldset>
 </div>
-
-<%= javascript_tag do %>
-$(function() {
-  $('.selectize').selectize({
-    sortField: 'text'
-  });
-  $('.selectize-with-btn').selectize({
-    plugins: ['remove_button']
-  });
-});
-<% end %>
-

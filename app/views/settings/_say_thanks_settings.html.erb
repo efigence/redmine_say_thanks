@@ -1,43 +1,31 @@
 <h4>Groups taking part in say thanks</h4>
 <p>
-<%= label_tag "group_ids", 'Permitted groups' %>
-<%= select_tag "settings[group_ids][]", options_from_collection_for_select(Group.all, 'id', 'lastname', @settings['group_ids']), :multiple => true, :class => 'selectize', :id => "group_ids" %>
-
+  <%= label_tag "group_ids", 'Permitted groups' %>
+  <%= select_tag "settings[group_ids][]", options_from_collection_for_select(Group.all, 'id', 'lastname', @settings['group_ids']), :multiple => true, :class => 'selectize', :id => "group_ids" %>
 </p>
-
 
 <h4>Group leaders</h4>
 <p>
-
-<% g_struct = Group.all.map{ |g| { :id => g.id, :name => g.lastname, :users => g.users.pluck(:login, :id) }} %>
-
-<% g_struct.each do |s| %>
-
-  <%= label_tag "group_managers_#{s[:id]}", s[:name] %>
-
-  <%= select_tag "settings[group_managers][#{s[:id]}][]", options_for_select(s[:users], @settings['group_managers'].try(:[], s[:id].to_s)), multiple: true, class: 'selectize', id: "group_managers_#{s[:id]}" %>
-
-<% end %>
+  <% g_struct = Group.all.map{ |g| { :id => g.id, :name => g.lastname, :users => g.users.pluck(:login, :id) }} %>
+  <% g_struct.each do |s| %>
+    <%= label_tag "group_managers_#{s[:id]}", s[:name] %>
+    <%= select_tag "settings[group_managers][#{s[:id]}][]", options_for_select(s[:users], @settings['group_managers'].try(:[], s[:id].to_s)), multiple: true, class: 'selectize', id: "group_managers_#{s[:id]}" %>
+  <% end %>
 </p>
 
 <h4>Time settings</h4>
 <p>
-<%= label_tag "unroll_period", "Unroll period (in days)" %>
-<%= select_tag "settings[unroll_period]", options_for_select(0..30, @settings['unroll_period']), class: 'selectize' %>
+  <%= label_tag "unroll_period", "Unroll period (in days)" %>
+  <%= select_tag "settings[unroll_period]", options_for_select(0..30, @settings['unroll_period']), class: 'selectize' %>
 </p>
 
 <p>
-<%= label_tag "vote_frequency", "Vote frequency (in days)" %>
-<%= select_tag "settings[vote_frequency]", options_for_select(1..30, @settings['vote_frequency']), class: 'selectize' %>
+  <%= label_tag "vote_frequency", "Vote frequency (in days)" %>
+  <%= select_tag "settings[vote_frequency]", options_for_select(1..30, @settings['vote_frequency']), class: 'selectize' %>
 </p>
 
 <% content_for :header_tags do %>
   <%= javascript_include_tag 'selectize.min.js',   :plugin => 'redmine_say_thanks' %>
   <%= stylesheet_link_tag 'selectize.default.css', :plugin => 'redmine_say_thanks' %>
-<% end %>
-
-<%= javascript_tag do %>
-  $('.selectize').selectize();
-
-  $('.settings').removeClass('tabular');
+  <%= javascript_include_tag 'settings.js',   :plugin => 'redmine_say_thanks' %>
 <% end %>
