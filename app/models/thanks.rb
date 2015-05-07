@@ -100,19 +100,19 @@ class Thanks < ActiveRecord::Base
 
   def not_rewarded_yet
     if status_was == "rewarded"
-      errors.add(:base, "Cannot unroll thanks which was already rewarded")
+      errors.add(:base, I18n.t('thanks.cant_unroll_rewarded'))
     end
   end
 
   def unroll_time_not_over
     if unroll_time_over?
-      errors.add(:base, "Unroll time is over")
+      errors.add(:base, I18n.t('thanks.unroll_over'))
     end
   end
 
   def user_can_thank_now
     unless sender.can_give_thanks?
-      errors.add(:base, "You can say thanks again on #{sender.pretty_next_thanks_date}")
+      errors.add(:base, I18n.t('thanks.come_back', date: sender.pretty_next_thanks_date))
     end
   end
 end

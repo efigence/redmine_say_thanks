@@ -7,9 +7,8 @@ class ThanksController < BaseThanksController
 
   def create
     @new_thanks = User.current.sent_thanks.new(thanks_params)
-
     if @new_thanks.save
-      flash[:notice] = 'Thanks saved!'
+      flash[:notice] = t('thanks.thanks_saved')
       redirect_to given_thanks_path
     else
       flash[:error] = @new_thanks.errors.full_messages.to_sentence
@@ -32,7 +31,7 @@ class ThanksController < BaseThanksController
   def unroll
     @thanks = Thanks.find(params[:id])
     @thanks.unrolled!
-    flash[:notice] = 'Thanks unrolled!'
+    flash[:notice] = t('thanks.thanks_unrolled')
     redirect_to given_thanks_path
   end
 

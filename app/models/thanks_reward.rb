@@ -26,20 +26,20 @@ class ThanksReward < ActiveRecord::Base
     return if manager.blank?
     group_managers = Setting.plugin_redmine_say_thanks['group_managers'] || {}
     unless group_managers.values.flatten.include?(manager.id.to_s)
-      errors.add(:base, "Current user doesn't have manager privileges.")
+      errors.add(:base, I18n.t('thanks.not_manager'))
     end
   end
 
   def user_is_rewardable
     if user && !user.in_group_permitted_to_thanks?
-      errors.add(:base, "User doesn't take part in Say Thanks.")
+      errors.add(:base, I18n.t('thanks.not_participant'))
     end
   end
 
   def user_has_enough_points
     return unless user.present? && points.present?
     unless user_thanks_to_use.count >= points
-      errors.add(:base, "User doesn't have enough spare points.")
+      errors.add(:base, I18n.t('thanks.not_enough_points'))
     end
   end
 

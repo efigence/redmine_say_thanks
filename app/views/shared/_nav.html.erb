@@ -1,13 +1,13 @@
 <div class="tabs">
   <ul>
-    <li><%= link_to 'Say thanks', new_thank_path, class: action_name == 'new' ? 'selected' : nil %></li>
-    <li><%= link_to 'My points', received_thanks_path, class: action_name == 'received' ? 'selected' : nil %></li>
-    <li><%= link_to 'Given thanks', given_thanks_path, class: action_name == 'given' ? 'selected' : nil %></li>
-    <li><%= link_to 'Rewards', thanks_rewards_path, class: action_name == 'index' && controller_name == 'rewards' ? 'selected' : nil %></li>
+    <li><%= link_to t('thanks.nav.say'), new_thank_path, class: action_name == 'new' ? 'selected' : nil %></li>
+    <li><%= link_to t('thanks.nav.my_points'), received_thanks_path, class: action_name == 'received' ? 'selected' : nil %></li>
+    <li><%= link_to t('thanks.nav.given'), given_thanks_path, class: action_name == 'given' ? 'selected' : nil %></li>
+    <li><%= link_to t('thanks.nav.rewards'), thanks_rewards_path, class: action_name == 'index' && controller_name == 'rewards' ? 'selected' : nil %></li>
     <% @manageable_groups.each do |group| %>
-      <li><%= link_to "#{group.lastname} thanks", manager_thanks_path(group), class: action_name == 'index' && controller_name == 'manager_thanks' && params[:group_id] == group.id.to_s ? 'selected' : nil %></li>
-      <li><%= link_to "#{group.lastname} stats", manager_thanks_stats_path(group), class: action_name == 'stats' && params[:group_id] == group.id.to_s ? 'selected' : nil %></li>
-      <li><%= link_to "#{group.lastname} rewards", manager_rewards_path(group), class: action_name == 'index' && controller_name == 'manager_rewards' && params[:group_id] == group.id.to_s ? 'selected' : nil %></li>
+      <li><%= link_to "#{group.lastname} #{t('thanks.nav.thanks')}", manager_thanks_path(group), class: action_name == 'index' && controller_name == 'manager_thanks' && params[:group_id] == group.id.to_s ? 'selected' : nil %></li>
+      <li><%= link_to "#{group.lastname} #{t('thanks.nav.stats')}", manager_thanks_stats_path(group), class: action_name == 'stats' && params[:group_id] == group.id.to_s ? 'selected' : nil %></li>
+      <li><%= link_to "#{group.lastname} #{t('thanks.nav.rewards').downcase}", manager_rewards_path(group), class: action_name == 'index' && controller_name == 'manager_rewards' && params[:group_id] == group.id.to_s ? 'selected' : nil %></li>
     <% end %>
   </ul>
 </div>

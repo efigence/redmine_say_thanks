@@ -1,0 +1,75 @@
+pl:
+  thanks:
+    nav:
+      say: Podziękuj
+      my_points: Moje punkty
+      given: Wysłane podziękowania
+      rewards: Nagrody
+      thanks: podziękowania
+      stats: statystyki
+    given_stats: Statystyki wysłanych podziękowań
+    my_stats: Statystyki otrzymanych podziękowań
+    reward_stats: Statystyki nagród
+
+    given_listing: Lista wysłanych podziękowań
+    received_listing: Lista otrzymanych podziękowań
+    rewards_listing: Lista nagród
+
+    users_stats: Statystyki użytkownika
+
+    thanks_listing: Lista podziękowań
+
+    thank_someone: Wyślij podziękowania
+
+    total_given: Suma wysłanych
+    total_earned: Suma otrzymanych
+
+    to_spend: Do wydania
+    quarantine: Kwarantanna
+    unrolled: Cofnięte
+    spent: Wydane
+    given_to: Odbiorca
+    given_by: Otrzymane od
+    date: Data
+    status: Status
+
+    unroll: cofnij
+
+    choose_user: Wybierz użytkownika
+
+    come_back: "Przykro nam, lecz aktualnie nie możesz wysłać podziękowań. Wróć w dniu %{date}."
+
+    rewarded: Wydane
+    sent: Wysłane punkty
+
+    rewards: Nagrody
+    points_spent: Wydane punkty
+    points_cost: Liczba punktów
+    reward_title: Tytuł nagrody
+    rewarded_by: Otrzymano od
+    rewarded_at: Data otrzymania
+
+    reward_assigned: "Nagroda została przypisana."
+    thanks_saved: "Twoje podziękowania zostały zapisane."
+    thanks_unrolled: "Twoje podziękowania zostały cofnięte!"
+
+    assign: Przypisz nagrodę
+    title: Tytuł
+    user: Użytkownik
+
+    submit: zatwierdź
+    filters: Filtry
+
+    date_created: Data utworzenia
+
+    recipient: odbiorca
+    sender: nadawca
+
+    reset_filters: Resetuj filtry
+
+    cant_unroll_rewarded: "Nie mozna cofnąć punktów, za które otrzymana została nagroda."
+    unroll_over: "Czas na cofnięcie zakończył się."
+
+    not_manager: "Aktualny Użytkownik nie posiada uprawnień managera."
+    not_participant: "Użytkownik nie bierze udziału w podziękowaniach."
+    not_enough_points: "Użytkownik nie posiada wystarczającej liczby dostępnych punktów."

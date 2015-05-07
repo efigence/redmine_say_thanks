@@ -6,7 +6,7 @@
 
 <%= render 'shared/nav' %>
 
-<h2 class="thanks-header"><%= @group.to_s %> - rewards listing</h2>
+<h2 class="thanks-header"><%= @group.to_s %> - <%= t('thanks.rewards_listing') %></h2>
 
 <div style="float:left;width:80%;">
 
@@ -19,10 +19,10 @@
     <table class="list">
       <thead>
         <tr>
-          <th>User</th>
-          <th>Title</th>
-          <th>Points used</th>
-          <th>Date</th>
+          <th><%= t('thanks.user') %></th>
+          <th><%= t('thanks.title') %></th>
+          <th><%= t('thanks.points_spent') %></th>
+          <th><%= t('thanks.date') %></th>
 
         </tr>
       </thead>
@@ -39,22 +39,21 @@
       </tbody>
     </table>
   </div>
-
 </div>
 
 <div class="splitcontentright" style="width:20%;">
   <fieldset>
-    <legend>Filters</legend>
+    <legend><%= t('thanks.filters') %></legend>
     <%= form_tag manager_rewards_path, method: :get do %>
       <p>
-        <b><%= label_tag :received_by, 'User' %></b>
+        <b><%= label_tag :received_by, t('thanks.user') %></b>
         <%= select_tag :received_by, options_from_collection_for_select(@users, "id", "to_s", params[:received_by]), :multiple => true, :class => 'selectize-with-btn' %>
       </p>
 
       <p><%= submit_tag l('label_search') %></p>
     <% end %>
     <div class="contextual">
-      <%= link_to l('accounting.filters.reset'), manager_rewards_path, class: "icon icon-reload" %>
+      <%= link_to l('thanks.reset_filters'), manager_rewards_path, class: "icon icon-reload" %>
     </div>
   </fieldset>
 </div>

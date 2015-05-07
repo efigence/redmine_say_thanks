@@ -12,9 +12,9 @@
   <%= form_for @new_thanks, url: thanks_path do |f| %>
 
     <fieldset class="box settings" style="max-width:30%">
-      <legend><strong>Say thanks to someone</strong></legend>
+      <legend><strong><%= t('thanks.thank_someone') %></strong></legend>
       <p>
-        <%= f.label :receiver_id, 'Choose user' %>
+        <%= f.label :receiver_id, t('thanks.choose_user') %>
         <%= f.select :receiver_id, options_from_collection_for_select(User.thankable, 'id', 'to_s'), {}, :class => 'selectize', :autofocus => false %>
       </p>
       <%= f.submit 'Submit' %>
@@ -23,7 +23,7 @@
   <% end %>
 
 <% else %>
-  <div class="flash error" id="flash_error">We're sorry, you can't say thanks right now. Come back on <%= User.current.pretty_next_thanks_date %>.</div>
+  <div class="flash error" id="flash_error"><%= t('thanks.come_back', date: User.current.pretty_next_thanks_date) %></div>
 <% end %>
 <%= javascript_tag do %>
 $(function(){

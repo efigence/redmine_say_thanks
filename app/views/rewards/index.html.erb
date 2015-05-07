@@ -5,22 +5,22 @@
 <%= render 'shared/nav' %>
 
 <div class="splitcontentleft" style="width:15%;">
-  <h2 class="thanks-header">Rewards statistics</h2>
+  <h2 class="thanks-header"><%= t('thanks.reward_stats') %></h2>
 
-  <h4>Rewards: <%= @rewards.count %></h4>
-  <h4>Points spent: <%= User.current.received_thanks.rewarded.count %></h4>
+  <h4><%= t('thanks.rewards') %>: <%= @rewards.count %></h4>
+  <h4><%= t('thanks.points_spent') %>: <%= User.current.received_thanks.rewarded.count %></h4>
 </div>
 
 <div class="splitcontentright" style="width:50%;margin-right:20%">
   <div class="table-wrapper">
-    <h2 class="thanks-header">Rewards listing</h2>
+    <h2 class="thanks-header"><%= t('thanks.rewards_listing') %></h2>
     <table class="list">
       <thead>
         <tr>
-          <th>Reward title</th>
-          <th>Point cost</th>
-          <th>Rewarded by</th>
-          <th>Rewarded at</th>
+          <th><%= t('thanks.points_spent') %></th>
+          <th><%= t('thanks.points_cost') %></th>
+          <th><%= t('thanks.rewarded_by') %></th>
+          <th><%= t('thanks.rewarded_at') %></th>
           <th></th>
         </tr>
       </thead>

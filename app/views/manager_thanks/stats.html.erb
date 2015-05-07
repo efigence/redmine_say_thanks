@@ -6,7 +6,7 @@
 
 <%= render 'shared/nav' %>
 
-<h2 class="thanks-header"><%= @group.to_s %> - users statistics</h2>
+<h2 class="thanks-header"><%= @group.to_s %> - <%= t('thanks.users_stats') %></h2>
 
 <div style="float:left;width:80%;">
 
@@ -19,12 +19,12 @@
     <table class="list">
       <thead>
         <tr>
-          <th>User</th>
-          <th>To use</th>
-          <th>Waiting</th>
-          <th>Rewarded</th>
-          <th>Unrolled</th>
-          <th>Sent</th>
+          <th><%= t('thanks.user') %></th>
+          <th><%= t('thanks.to_spend') %></th>
+          <th><%= t('thanks.quarantine') %></th>
+          <th><%= t('thanks.rewarded') %></th>
+          <th><%= t('thanks.unrolled') %></th>
+          <th><%= t('thanks.sent') %></th>
           <th></th>
         </tr>
       </thead>
@@ -48,7 +48,7 @@
 
 <div class="splitcontentright" style="width:20%;">
   <fieldset>
-    <legend>Filters</legend>
+    <legend><%= t('thanks.filters') %></legend>
     <%= form_tag manager_thanks_stats_path, method: :get do %>
       <p>
         <b><%= label_tag :received_by, 'User' %></b>
@@ -58,7 +58,7 @@
       <p><%= submit_tag l('label_search') %></p>
     <% end %>
     <div class="contextual">
-      <%= link_to l('accounting.filters.reset'), manager_thanks_stats_path, class: "icon icon-reload" %>
+      <%= link_to l('thanks.reset_filters'), manager_thanks_stats_path, class: "icon icon-reload" %>
     </div>
   </fieldset>
 </div>

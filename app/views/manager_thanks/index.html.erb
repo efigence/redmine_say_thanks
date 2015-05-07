@@ -6,17 +6,17 @@
 
 <%= render 'shared/nav' %>
 
-<h2 class="thanks-header"><%= @group.to_s %> - thanks listing</h2>
+<h2 class="thanks-header"><%= @group.to_s %> - <%= t('thanks.thanks_listing') %></h2>
 
 <div class="splitcontentleft" style="width:70%;">
 
   <table class="list">
     <thead>
       <tr>
-        <th>Given to</th>
-        <th>Given by</th>
-        <th>Status</th>
-        <th>Date created</th>
+        <th><%= t('thanks.given_to') %></th>
+        <th><%= t('thanks.given_by') %></th>
+        <th><%= t('thanks.status') %></th>
+        <th><%= t('thanks.date') %></th>
         <th></th>
       </tr>
     </thead>
@@ -39,27 +39,27 @@
 
 <div class="splitcontentright" style="width:20%;">
   <fieldset>
-    <legend>Filters</legend>
+    <legend><%= t('thanks.filters') %></legend>
     <%= form_tag manager_thanks_path, method: :get do %>
       <p>
-        <b><%= label_tag :date_created, 'Data utworzenia' %></b>
+        <b><%= label_tag :date_created,  t('thanks.date_created') %></b>
         <span style="white-space:nowrap;">
           <%= text_field_tag :date_created, params[:date_created], :autocomplete => 'off', :class => "basic-text" %>
           <%= calendar_for(:date_created) %>
         </span>
       </p>
       <p>
-        <b><%= label_tag 'status', 'Status' %></b>
+        <b><%= label_tag 'status', t('thanks.status') %></b>
         <%= select_tag :status, options_for_select(Thanks.statuses, params[:status]), :multiple => true, :class => 'selectize-with-btn' %>
       </p>
 
       <p>
-        <b><%= label_tag 'recipient' %></b>
+        <b><%= label_tag t('thanks.recipient') %></b>
         <%= select_tag :received_by, options_from_collection_for_select(@users, "id", "to_s", params[:received_by]), :multiple => true, :class => 'selectize-with-btn' %>
       </p>
 
       <p>
-        <b><%= label_tag 'sender' %></b>
+        <b><%= label_tag t('thanks.sender') %></b>
         <%= select_tag :sent_by, options_from_collection_for_select(@users, "id", "to_s", params[:sent_by]), :multiple => true, :class => 'selectize-with-btn' %>
       </p>
 
@@ -67,7 +67,7 @@
       <p><%= submit_tag l('label_search') %></p>
     <% end %>
     <div class="contextual">
-      <%= link_to l('accounting.filters.reset'), manager_thanks_path, class: "icon icon-reload" %>
+      <%= link_to l('thanks.reset_filters'), manager_thanks_path, class: "icon icon-reload" %>
     </div>
   </fieldset>
 </div>

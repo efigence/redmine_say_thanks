@@ -5,24 +5,24 @@
 <%= render 'shared/nav' %>
 
 <div class="splitcontentleft" style="width:15%;">
-  <h2 class="thanks-header">Given statistics</h2>
+  <h2 class="thanks-header"><%= t('thanks.given_stats') %></h2>
 
-  <h4>Total given: <%= @points[:total] %></h4>
-  <h4>To spend: <%= @points[:to_spend] %></h4>
-  <h4>In quarantine: <%= @points[:quarantine] %></h4>
-  <h4>Unrolled: <%= @points[:unrolled] %></h4>
-  <h4>Spent: <%= @points[:spent] %></h4>
+  <h4><%= t('thanks.total_given') %>: <%= @points[:total] %></h4>
+  <h4><%= t('thanks.to_spend') %>: <%= @points[:to_spend] %></h4>
+  <h4><%= t('thanks.quarantine') %>: <%= @points[:quarantine] %></h4>
+  <h4><%= t('thanks.unrolled') %>: <%= @points[:unrolled] %></h4>
+  <h4><%= t('thanks.spent') %>: <%= @points[:spent] %></h4>
 </div>
 
 <div class="splitcontentright" style="width:50%;margin-right:20%">
   <div class="table-wrapper">
-    <h2 class="thanks-header">Given points listing</h2>
+    <h2 class="thanks-header"><%= t('thanks.given_listing') %></h2>
     <table class="list">
       <thead>
         <tr>
-          <th>Given to</th>
-          <th>Date</th>
-          <th>Status</th>
+          <th><%= t('thanks.given_to') %></th>
+          <th><%= t('thanks.date') %></th>
+          <th><%= t('thanks.status') %></th>
           <th></th>
         </tr>
       </thead>
@@ -36,7 +36,7 @@
             <td><%= thank.status %></td>
             <td class="buttons">
               <% if thank.can_be_unrolled? %>
-                <%= link_to 'unroll', unroll_thank_path(thank), :data => {:confirm => 'You sure to unroll?'}, :method => :put, :class => 'icon icon-del' %>
+                <%= link_to t('thanks.unroll'), unroll_thank_path(thank), :data => {:confirm => 'You sure to unroll?'}, :method => :put, :class => 'icon icon-del' %>
               <% end %>
             </td>
           </tr>

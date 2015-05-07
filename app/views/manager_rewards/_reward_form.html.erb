@@ -1,19 +1,19 @@
 <%= form_for @reward, url: manager_rewards_path do |f| %>
   <%= error_messages_for @reward %>
   <fieldset class="box settings">
-    <legend>Assign reward</legend>
+    <legend><%= t('thanks.assign') %></legend>
     <p>
-      <%= f.label :title, 'Title' %>
+      <%= f.label :title, t('thanks.title') %>
       <%= f.text_field :title, :required => true, :class => 'basic-text', :style => "width:100%;" %>
     </p>
     <p>
-      <%= f.label :points, 'Points' %>
+      <%= f.label :points, t('thanks.points_cost') %>
       <%= f.number_field :points, :required => true, :class => 'basic-text', :style => "width:100%;", :min => 1 %>
     </p>
     <p>
-      <%= f.label :user_id %>
+      <%= f.label :user_id, t('thanks.user') %>
       <%= f.select :user_id, options_from_collection_for_select(@users, "id", "to_s", params[:user_id]), {}, :class => 'selectize', style: 'margin-right:50px;' %>
     </p>
-    <%= f.submit :save %>
+    <%= f.submit t('thanks.submit') %>
   </fieldset>
 <% end %>
