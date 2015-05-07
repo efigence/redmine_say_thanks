@@ -1,0 +1,21 @@
+---
+
+# First group
+groups_users_001:
+  group_id: 10
+  user_id: 2
+groups_users_002:
+  group_id: 10
+  user_id: 3
+groups_users_003:
+  group_id: 10
+  user_id: 4
+
+
+# Second group
+groups_users_004:
+  group_id: 11
+  user_id: 2
+groups_users_005:
+  group_id: 11
+  user_id: 3

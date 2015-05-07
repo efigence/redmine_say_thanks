@@ -1,0 +1,43 @@
+require File.expand_path('../../test_helper', __FILE__)
+
+class UsersTest < ActiveSupport::TestCase
+
+  def setup
+    Setting.plugin_redmine_say_thanks['group_ids'] = %w(10 11)
+    Setting.plugin_redmine_say_thanks['group_managers'] = { '10' => %w(2), '11' => %w(2) }
+  end
+
+  test "user should be permitted to use thanks plugin if belongs to proper group" do
+    assert users(:andrew).in_group_permitted_to_thanks?, 'not permitted to use thanks'
+    assert users(:andrew).can_access_thanks?, 'cannot access thanks'
+
+    assert_not users(:not_permitted).in_group_permitted_to_thanks?, 'permitted to use thanks'
+    assert_not users(:not_permitted).can_access_thanks?, 'can access thanks'
+  end
+
+  test "user should get proper manageable group ids" do
+    assert_equal %w(10 11), users(:manager).manageable_thanks_group_ids
+    assert_equal [], users(:andrew).manageable_thanks_group_ids
+  end
+
+  test "thankable scope should return users taking part in thanks but not self" do
+    User.current = users(:manager)
+    assert_equal User.find(3,4), User.thankable
+  end
+
+  test "next thanks date should return today if user can give thanks now" do
+    assert_equal Date.today, users(:andrew).next_thanks_date
+  end
+
+  test "next thanks date should return today + numer of days from config if already voted today" do
+    Setting.plugin_redmine_say_thanks['vote_frequency'] = '5'
+    user = users(:andrew)
+    receiver = users(:manager)
+    thanks = user.sent_thanks.create!(receiver_id: receiver.id)
+    assert_equal thanks, user.sent_thanks.last
+    assert_equal thanks, receiver.received_thanks.last
+    assert_equal Date.today + 5.days, user.next_thanks_date
+  end
+
+  # TODO: test users with stats scope
+end

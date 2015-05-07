@@ -3,9 +3,6 @@ class Thanks < ActiveRecord::Base
 
   enum status: [:active, :unrolled, :rewarded]
 
-  VOTE_FREQUENCY = Setting.plugin_redmine_say_thanks['vote_frequency'] || '1'
-  UNROLL_PERIOD = Setting.plugin_redmine_say_thanks['unroll_period'] || '7'
-
   attr_accessible :receiver_id, :status
 
   belongs_to :sender, class_name: 'User'
@@ -45,8 +42,16 @@ class Thanks < ActiveRecord::Base
     active.order(created_at: :asc).reject(&:can_be_unrolled?)
   }
 
-  def self.waiting_period_end
-    Date.today - eval(UNROLL_PERIOD).days
+  def self.vote_frequency
+    Setting.plugin_redmine_say_thanks['vote_frequency'] || '1'
+  end
+
+  def self.unroll_period
+    Setting.plugin_redmine_say_thanks['unroll_period'] || '7'
+  end
+
+  def self.quarantine_period_end
+    Date.today - eval(vote_frequency).days
   end
 
   def self.mark_as_rewarded(reward_id)
@@ -84,7 +89,7 @@ class Thanks < ActiveRecord::Base
   end
 
   def unroll_until
-    created_at.to_date + eval(UNROLL_PERIOD).days
+    created_at.to_date + eval(self.class.unroll_period).days
   end
 
   private

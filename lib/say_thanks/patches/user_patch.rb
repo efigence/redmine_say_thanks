@@ -24,7 +24,7 @@ module SayThanks
           }
 
           scope :with_thanks_stats, lambda {
-            end_wait_date = Thanks.waiting_period_end.to_formatted_s(:db)
+            end_wait_date = Thanks.quarantine_period_end.to_formatted_s(:db)
 
             select('users.id, users.firstname, users.lastname').
             select('COUNT(distinct s.id) sent').
@@ -55,7 +55,7 @@ module SayThanks
         def next_thanks_date
           last_thanks = sent_thanks.persisted.last
           if last_thanks
-            last_thanks.created_at.to_date + eval(Thanks::VOTE_FREQUENCY).days
+            last_thanks.created_at.to_date + eval(Thanks.vote_frequency).days
           else
             Date.today
           end

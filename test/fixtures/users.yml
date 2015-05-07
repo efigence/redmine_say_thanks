@@ -1,0 +1,55 @@
+---
+
+# Thanks group manager
+manager:
+  login: manager
+  status: 1
+  salt: 82090c953c4a0000a7db253b0691a6b4
+  hashed_password: b5b6ff9543bf1387374cdfa27a54c96d236a7150
+  firstname: Thanks
+  lastname: Manager
+  id: 2
+  type: User
+
+# Thanks group members
+andrew:
+  login: andrew
+  status: 1
+  salt: 82090c953c4a0000a7db253b0691a6b4
+  hashed_password: b5b6ff9543bf1387374cdfa27a54c96d236a7150
+  firstname: Andrew
+  lastname: Golota
+  id: 3
+  type: User
+
+ryszard:
+  login: ryszard
+  status: 1
+  salt: 82090c953c4a0000a7db253b0691a6b4
+  hashed_password: b5b6ff9543bf1387374cdfa27a54c96d236a7150
+  firstname: Ryszard
+  lastname: Andrzejewski
+  id: 4
+  type: User
+
+not_permitted:
+  login: not_permitted
+  status: 1
+  salt: 82090c953c4a0000a7db253b0691a6b4
+  hashed_password: b5b6ff9543bf1387374cdfa27a54c96d236a7150
+  firstname: Not
+  lastname: Permitted
+  id: 5
+  type: User
+
+# Groups
+a_team:
+  id: 10
+  lastname: A Team
+  type: Group
+  status: 1
+b_team:
+  id: 11
+  lastname: B Team
+  type: Group
+  status: 1
