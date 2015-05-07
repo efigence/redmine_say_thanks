@@ -26,18 +26,30 @@ class UsersTest < ActiveSupport::TestCase
   end
 
   test "next thanks date should return today if user can give thanks now" do
-    assert_equal Date.today, users(:andrew).next_thanks_date
+    Setting.plugin_redmine_say_thanks['vote_frequency'] = '1'
+    user = users(:andrew)
+    last_thanks_date = user.sent_thanks.last.created_at
+
+    assert_equal (last_thanks_date + 1.day).to_date, users(:andrew).next_thanks_date
   end
 
   test "next thanks date should return today + numer of days from config if already voted today" do
-    Setting.plugin_redmine_say_thanks['vote_frequency'] = '5'
+    Setting.plugin_redmine_say_thanks['vote_frequency'] = '1'
     user = users(:andrew)
     receiver = users(:manager)
     thanks = user.sent_thanks.create!(receiver_id: receiver.id)
     assert_equal thanks, user.sent_thanks.last
     assert_equal thanks, receiver.received_thanks.last
-    assert_equal Date.today + 5.days, user.next_thanks_date
+    assert_equal Date.today + 1.day, user.next_thanks_date
   end
 
-  # TODO: test users with stats scope
+  test "with_thanks_stats scope should return proper values" do
+    user_with_stats = User.where(id: 2).with_thanks_stats.first
+
+    assert_equal 1, user_with_stats.active
+    assert_equal 0, user_with_stats.waiting
+    assert_equal 0, user_with_stats.rewarded
+    assert_equal 1, user_with_stats.unrolled
+    assert_equal 1, user_with_stats.sent
+  end
 end

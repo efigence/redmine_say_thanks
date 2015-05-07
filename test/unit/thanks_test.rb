@@ -54,4 +54,15 @@ class ThanksTest < ActiveSupport::TestCase
   test "involving scope should return all sender and receivers with passed ids" do
     assert_equal Thanks.where(id: [1,2]).pluck(:id), Thanks.involving([3]).pluck(:id)
   end
+
+  test "stats scope should return proper stats" do
+    expected_stats = {
+      total: 2,
+      to_spend: 1,
+       quarantine: 1,
+      unrolled: 1,
+      spent: 0
+    }
+    assert_equal expected_stats, Thanks.stats
+  end
 end
