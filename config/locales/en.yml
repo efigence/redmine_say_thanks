@@ -11,20 +11,14 @@ en:
     given_stats: Given statistics
     my_stats: My statistics
     reward_stats: Reward statistics
-
     given_listing: Given points listing
     received_listing: Received points listing
     rewards_listing: Rewards listing
-
     users_stats: Users statistics
-
     thanks_listing: Thanks listing
-
     thank_someone: Say thanks to someone
-
     total_given: Total given
     total_earned: Total earned
-
     to_spend: To spend
     quarantine: In quarantine
     unrolled: Unrolled
@@ -33,44 +27,31 @@ en:
     given_by: Given by
     date: Date
     status: Status
-
     unroll: unroll
-
     choose_user: Choose user
-
     come_back: "We're sorry, you can't say thanks right now. Come back on %{date}."
-
     rewarded: Rewarded
     sent: Given points
-
     rewards: Rewards
     points_spent: Points spent
     points_cost: Points cost
     reward_title: Reward title
     rewarded_by: Rewarded by
     rewarded_at: Rewarded at
-
     reward_assigned: "Reward has been assigned."
     thanks_saved: "Your thanks have been saved."
     thanks_unrolled: "You thanks have been unrolled!"
-
     assign: Assign reward
     title: Title
     user: User
-
     submit: submit
     filters: Filters
-
     date_created: Date created
-
     recipient: recipient
     sender: sender
-
     reset_filters: Reset filters
-
     cant_unroll_rewarded: "Cannot unroll thanks which was already rewarded."
     unroll_over: Unroll time is over.
-
     not_manager: "Current user doesn't have manager privileges."
     not_participant: "User doesn't take part in Say Thanks."
     not_enough_points: "User doesn't have enough spare points."

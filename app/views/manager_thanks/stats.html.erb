@@ -8,14 +8,13 @@
 
 <h2 class="thanks-header"><%= @group.to_s %> - <%= t('thanks.users_stats') %></h2>
 
-<div style="float:left;width:80%;">
+<div class="thanks-main-mng">
 
   <div style="float:left;min-width:30%">
     <%= render 'reward_form' %>
   </div>
 
   <div style="float:right;min-width:65%;margin-right:40px;margin-top:8px;">
-
     <table class="list">
       <thead>
         <tr>
@@ -43,7 +42,6 @@
       </tbody>
     </table>
   </div>
-
 </div>
 
 <div class="splitcontentright" style="width:20%;">

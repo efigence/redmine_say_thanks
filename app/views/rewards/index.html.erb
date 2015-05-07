@@ -4,14 +4,14 @@
 
 <%= render 'shared/nav' %>
 
-<div class="splitcontentleft" style="width:15%;">
+<div class="thanks-stats">
   <h2 class="thanks-header"><%= t('thanks.reward_stats') %></h2>
 
   <h4><%= t('thanks.rewards') %>: <%= @rewards.count %></h4>
   <h4><%= t('thanks.points_spent') %>: <%= User.current.received_thanks.rewarded.count %></h4>
 </div>
 
-<div class="splitcontentright" style="width:50%;margin-right:20%">
+<div class="thanks-main">
   <div class="table-wrapper">
     <h2 class="thanks-header"><%= t('thanks.rewards_listing') %></h2>
     <table class="list">

@@ -15,3 +15,20 @@
 .thanks-header {
   margin-bottom:20px;
 }
+
+.thanks-stats {
+  float:right;
+  width:20%;
+  border-left:1px solid #bbb;
+  padding:20px;
+}
+
+.thanks-main {
+  float:left;
+  width: 70%;
+}
+
+.thanks-main-mng {
+  float:left;
+  width: 80%;
+}
