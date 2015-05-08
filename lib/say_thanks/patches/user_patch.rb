@@ -39,9 +39,9 @@ module SayThanks
             joins("LEFT OUTER JOIN thanks r_waiting ON r_waiting.receiver_id = users.id AND r_waiting.status = 0 AND DATE(r_waiting.created_at) > '#{end_wait_date}'").
             group(:id)
           }
-
         end
       end
+
       module InstanceMethods
 
         def can_access_thanks?

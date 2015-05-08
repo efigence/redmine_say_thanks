@@ -17,11 +17,10 @@
     <table class="list">
       <thead>
         <tr>
-          <th><%= t('thanks.points_spent') %></th>
+          <th><%= t('thanks.title') %></th>
           <th><%= t('thanks.points_cost') %></th>
           <th><%= t('thanks.rewarded_by') %></th>
           <th><%= t('thanks.rewarded_at') %></th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -31,7 +30,6 @@
             <td><%= reward.points %></td>
             <td><%= reward.manager.to_s %></td>
             <td><%= reward.created_at.strftime('%d-%m-%Y') %></td>
-            <td class="buttons"></td>
           </tr>
         <% end %>
       </tbody>

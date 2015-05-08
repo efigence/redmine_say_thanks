@@ -1,16 +1,19 @@
 <h4>Groups taking part in say thanks</h4>
 <p>
   <%= label_tag "group_ids", 'Permitted groups' %>
-  <%= select_tag "settings[group_ids][]", options_from_collection_for_select(Group.all, 'id', 'lastname', @settings['group_ids']), :multiple => true, :class => 'selectize', :id => "group_ids" %>
+  <%= select_tag "settings[group_ids][]", options_from_collection_for_select(Group.all, 'id', 'lastname', @settings['group_ids']), :multiple => true, :id => "group_ids" %>
 </p>
 
 <h4>Group leaders</h4>
 <p>
   <% g_struct = Group.all.map{ |g| { :id => g.id, :name => g.lastname, :users => g.users.pluck(:login, :id) }} %>
   <% g_struct.each do |s| %>
-    <%= label_tag "group_managers_#{s[:id]}", s[:name] %>
-    <%= select_tag "settings[group_managers][#{s[:id]}][]", options_for_select(s[:users], @settings['group_managers'].try(:[], s[:id].to_s)), multiple: true, class: 'selectize', id: "group_managers_#{s[:id]}" %>
+    <div class="group-select-container">
+      <%= label_tag "group_managers_#{s[:id]}", s[:name] %>
+      <%= select_tag "settings[group_managers][#{s[:id]}][]", options_for_select(s[:users], @settings['group_managers'].try(:[], s[:id].to_s)), multiple: true, class: 'selectize selekt-members', id: "group_managers_#{s[:id]}", data: {group_id: s[:id]} %>
+    </div>
   <% end %>
+
 </p>
 
 <h4>Time settings</h4>
