@@ -68,7 +68,11 @@ module SayThanks
         def manageable_thanks_group_ids
           group_ids = groups.pluck(:id).map(&:to_s)
           group_managers = Setting.plugin_redmine_say_thanks['group_managers'] || {}
-          group_ids.select { |gid| group_managers[gid].try(:include?, id.to_s) }
+          if admin?
+            group_managers.keys
+          else
+            group_ids.select { |gid| group_managers[gid].try(:include?, id.to_s) }
+          end
         end
 
         def in_group_permitted_to_thanks?

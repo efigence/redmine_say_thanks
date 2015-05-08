@@ -23,7 +23,7 @@ class ThanksReward < ActiveRecord::Base
   end
 
   def manager_has_permissions
-    return if manager.blank?
+    return if manager.blank? || manager.admin?
     group_managers = Setting.plugin_redmine_say_thanks['group_managers'] || {}
     unless group_managers.values.flatten.include?(manager.id.to_s)
       errors.add(:base, I18n.t('thanks.not_manager'))
