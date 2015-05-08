@@ -5,32 +5,33 @@
 <h2 class="thanks-header"><%= @group.to_s %> - <%= t('thanks.thanks_listing') %></h2>
 
 <div class="thanks-main">
-
-  <table class="list">
-    <thead>
-      <tr>
-        <th><%= t('thanks.given_to') %></th>
-        <th><%= t('thanks.given_by') %></th>
-        <th><%= t('thanks.status') %></th>
-        <th><%= t('thanks.date') %></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @thanks.each do |thank| %>
-        <% css_class = cycle 'odd', 'even' %>
-        <% css_class << ' unrolled' if thank.unrolled? %>
-        <tr class="<%= css_class %>">
-          <td><%= thank.receiver.to_s %></td>
-          <td><%= thank.sender.to_s %></td>
-          <td><%= thank.status %></td>
-          <td><%= thank.created_at.strftime('%d-%m-%Y') %></td>
-          <td class="buttons"></td>
+  <% if @thanks.any? %>
+    <table class="list">
+      <thead>
+        <tr>
+          <th><%= t('thanks.given_to') %></th>
+          <th><%= t('thanks.given_by') %></th>
+          <th><%= t('thanks.status') %></th>
+          <th><%= t('thanks.date') %></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <p class="pagination" style="padding-top:12px;"><%= pagination_links_full @paginate %></p>
+      </thead>
+      <tbody>
+        <% @thanks.each do |thank| %>
+          <% css_class = cycle 'odd', 'even' %>
+          <% css_class << ' unrolled' if thank.unrolled? %>
+          <tr class="<%= css_class %>">
+            <td><%= thank.receiver.to_s %></td>
+            <td><%= thank.sender.to_s %></td>
+            <td><%= thank.status %></td>
+            <td><%= thank.created_at.strftime('%d-%m-%Y') %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <p class="pagination" style="padding-top:12px;"><%= pagination_links_full @paginate %></p>
+  <% else %>
+    <p><%= t('thanks.no_manager_thanks') %></p>
+  <% end %>
 </div>
 
 <div class="splitcontentright" style="width:20%;">

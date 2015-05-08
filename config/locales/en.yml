@@ -57,3 +57,8 @@ en:
     not_enough_points: "User doesn't have enough spare points."
     date_from: Date from
     date_to: Date to
+    no_manager_thanks: No thanks have been given yet in this group.
+    no_manager_rewards: No rewards have been given yet in this group.
+    no_given_thanks: You haven't given any thanks yet.
+    no_received_thanks: You haven't received any thanks yet.
+    no_user_rewards: You haven't received any rewards yet.

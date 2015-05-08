@@ -18,32 +18,36 @@
 <div class="thanks-main">
   <div class="table-wrapper">
     <h2 class="thanks-header"><%= t('thanks.given_listing') %></h2>
-    <table class="list">
-      <thead>
-        <tr>
-          <th><%= t('thanks.given_to') %></th>
-          <th><%= t('thanks.date') %></th>
-          <th><%= t('thanks.status') %></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @thanks.each do |thank| %>
-          <% css_class = cycle 'odd', 'even' %>
-          <% css_class << ' unrolled' if thank.unrolled? %>
-          <tr class="<%= css_class %>">
-            <td><%= thank.receiver.to_s %></td>
-            <td><%= thank.created_at.strftime('%d-%m-%Y') %></td>
-            <td><%= thank.status %></td>
-            <td class="buttons">
-              <% if thank.can_be_unrolled? %>
-                <%= link_to t('thanks.unroll'), unroll_thank_path(thank), :data => {:confirm => 'You sure to unroll?'}, :method => :put, :class => 'icon icon-del' %>
-              <% end %>
-            </td>
+    <% if @thanks.any? %>
+      <table class="list">
+        <thead>
+          <tr>
+            <th><%= t('thanks.given_to') %></th>
+            <th><%= t('thanks.date') %></th>
+            <th><%= t('thanks.status') %></th>
+            <th></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <p class="pagination" style="padding-top:12px;"><%= pagination_links_full @paginate %></p>
+        </thead>
+        <tbody>
+          <% @thanks.each do |thank| %>
+            <% css_class = cycle 'odd', 'even' %>
+            <% css_class << ' unrolled' if thank.unrolled? %>
+            <tr class="<%= css_class %>">
+              <td><%= thank.receiver.to_s %></td>
+              <td><%= thank.created_at.strftime('%d-%m-%Y') %></td>
+              <td><%= thank.status %></td>
+              <td class="buttons">
+                <% if thank.can_be_unrolled? %>
+                  <%= link_to t('thanks.unroll'), unroll_thank_path(thank), :data => {:confirm => 'You sure to unroll?'}, :method => :put, :class => 'icon icon-del' %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <p class="pagination" style="padding-top:12px;"><%= pagination_links_full @paginate %></p>
+    <% else %>
+      <p><%= t('thanks.no_given_thanks') %></p>
+    <% end %>
   </div>
 </div>

@@ -14,26 +14,31 @@
 <div class="thanks-main">
   <div class="table-wrapper">
     <h2 class="thanks-header"><%= t('thanks.rewards_listing') %></h2>
-    <table class="list">
-      <thead>
-        <tr>
-          <th><%= t('thanks.title') %></th>
-          <th><%= t('thanks.points_cost') %></th>
-          <th><%= t('thanks.rewarded_by') %></th>
-          <th><%= t('thanks.rewarded_at') %></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @rewards.each do |reward| %>
-          <tr class="<%= cycle 'odd', 'even' %>">
-            <td><%= reward.title %></td>
-            <td><%= reward.points %></td>
-            <td><%= reward.manager.to_s %></td>
-            <td><%= reward.created_at.strftime('%d-%m-%Y') %></td>
+
+    <% if @rewards.any? %>
+      <table class="list">
+        <thead>
+          <tr>
+            <th><%= t('thanks.title') %></th>
+            <th><%= t('thanks.points_cost') %></th>
+            <th><%= t('thanks.rewarded_by') %></th>
+            <th><%= t('thanks.rewarded_at') %></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <p class="pagination" style="padding-top:12px;"><%= pagination_links_full @paginate %></p>
+        </thead>
+        <tbody>
+          <% @rewards.each do |reward| %>
+            <tr class="<%= cycle 'odd', 'even' %>">
+              <td><%= reward.title %></td>
+              <td><%= reward.points %></td>
+              <td><%= reward.manager.to_s %></td>
+              <td><%= reward.created_at.strftime('%d-%m-%Y') %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <p class="pagination" style="padding-top:12px;"><%= pagination_links_full @paginate %></p>
+    <% else %>
+      <p><%= t('thanks.no_user_rewards') %></p>
+    <% end %>
   </div>
 </div>
