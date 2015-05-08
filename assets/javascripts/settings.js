@@ -13,7 +13,7 @@ function hideUnpermitted(permitted) {
 $(function(){
   $('.settings').removeClass('tabular');
 
-  $select = $('.selectize').selectize({
+  $('.selectize').selectize({
     plugins: ['remove_button']
   });
 

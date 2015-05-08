@@ -16,6 +16,18 @@ class ThanksReward < ActiveRecord::Base
 
   after_save :mark_thanks
 
+  scope :date_from, -> (date) {
+    where('DATE(created_at) >= :date', date: date)
+  }
+
+  scope :date_to, -> (date) {
+    where('DATE(created_at) <= :date', date: date)
+  }
+
+  scope :received_by, -> (user_id) {
+    where(user_id: user_id)
+  }
+
   private
 
   def user_thanks_to_use

@@ -13,7 +13,7 @@ class ManagerThanksController < BaseThanksController
 
   def stats
     @selectable_users = @group.users.select(:id, :firstname, :lastname)
-    @users_with_points = @group.users.with_thanks_stats
+    @users_with_points = @group.users.with_thanks_stats(params[:date_from], params[:date_to])
     @users_with_points = @users_with_points.where(id: params[:received_by]) if params[:received_by]
 
     @reward = User.current.managed_rewards.new

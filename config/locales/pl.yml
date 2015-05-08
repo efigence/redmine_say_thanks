@@ -54,3 +54,5 @@ pl:
     not_manager: "Aktualny Użytkownik nie posiada uprawnień managera."
     not_participant: "Użytkownik nie bierze udziału w podziękowaniach."
     not_enough_points: "Użytkownik nie posiada wystarczającej liczby dostępnych punktów."
+    date_from: Okres od
+    date_to: Okres do

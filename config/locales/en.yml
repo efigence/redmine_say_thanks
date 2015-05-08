@@ -55,3 +55,5 @@ en:
     not_manager: "Current user doesn't have manager privileges."
     not_participant: "User doesn't take part in Say Thanks."
     not_enough_points: "User doesn't have enough spare points."
+    date_from: Date from
+    date_to: Date to

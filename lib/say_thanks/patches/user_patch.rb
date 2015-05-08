@@ -6,6 +6,7 @@ module SayThanks
       def self.included(base)
         base.class_eval do
           unloadable
+          base.send(:extend, ClassMethods)
           base.send(:include, InstanceMethods)
 
           has_many :sent_thanks,     class_name: 'Thanks', foreign_key: :sender_id
@@ -23,7 +24,7 @@ module SayThanks
             in_groups(permitted_group_ids).where.not(id: User.current.id)
           }
 
-          scope :with_thanks_stats, lambda {
+          scope :with_thanks_stats, lambda { |from, to|
             end_wait_date = Thanks.quarantine_period_end.to_formatted_s(:db)
 
             select('users.id, users.firstname, users.lastname').
@@ -32,13 +33,24 @@ module SayThanks
             select('COUNT(distinct r_rewarded.id) rewarded').
             select('COUNT(distinct r_unrolled.id) unrolled').
             select('COUNT(distinct r_waiting.id) waiting').
-            joins('LEFT OUTER JOIN thanks s ON s.sender_id = users.id').
-            joins("LEFT OUTER JOIN thanks r_active ON r_active.receiver_id = users.id AND r_active.status = 0 AND r_active.created_at <= '#{end_wait_date}'").
-            joins('LEFT OUTER JOIN thanks r_rewarded ON r_rewarded.receiver_id = users.id AND r_rewarded.status = 2').
-            joins('LEFT OUTER JOIN thanks r_unrolled ON r_unrolled.receiver_id = users.id AND r_unrolled.status = 1').
-            joins("LEFT OUTER JOIN thanks r_waiting ON r_waiting.receiver_id = users.id AND r_waiting.status = 0 AND DATE(r_waiting.created_at) > '#{end_wait_date}'").
+
+            joins(append_range('LEFT OUTER JOIN thanks s ON s.sender_id = users.id', from, to)).
+            joins(append_range("LEFT OUTER JOIN thanks r_active ON r_active.receiver_id = users.id AND r_active.status = 0 AND r_active.created_at <= '#{end_wait_date}'", from, to)).
+            joins(append_range('LEFT OUTER JOIN thanks r_rewarded ON r_rewarded.receiver_id = users.id AND r_rewarded.status = 2', from, to)).
+            joins(append_range('LEFT OUTER JOIN thanks r_unrolled ON r_unrolled.receiver_id = users.id AND r_unrolled.status = 1', from, to)).
+            joins(append_range("LEFT OUTER JOIN thanks r_waiting ON r_waiting.receiver_id = users.id AND r_waiting.status = 0 AND DATE(r_waiting.created_at) > '#{end_wait_date}'", from, to)).
             group(:id)
           }
+        end
+      end
+
+      module ClassMethods
+        def append_range(clause, from, to)
+          table_alias = clause.split(' ')[4]
+          c = [clause]
+          c << sanitize_sql_array(["AND DATE(#{table_alias}.created_at) >= '%s'", from]) if from.present?
+          c << sanitize_sql_array(["AND DATE(#{table_alias}.created_at) <= '%s'", to])   if to.present?
+          c.join(' ')
         end
       end
 

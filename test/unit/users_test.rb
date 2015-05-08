@@ -42,14 +42,4 @@ class UsersTest < ActiveSupport::TestCase
     assert_equal thanks, receiver.received_thanks.last
     assert_equal Date.today + 1.day, user.next_thanks_date
   end
-
-  test "with_thanks_stats scope should return proper values" do
-    user_with_stats = User.where(id: 2).with_thanks_stats.first
-
-    assert_equal 1, user_with_stats.active
-    assert_equal 0, user_with_stats.waiting
-    assert_equal 0, user_with_stats.rewarded
-    assert_equal 1, user_with_stats.unrolled
-    assert_equal 1, user_with_stats.sent
-  end
 end

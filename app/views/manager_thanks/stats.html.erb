@@ -48,7 +48,20 @@
         <b><%= label_tag :received_by, 'User' %></b>
         <%= select_tag :received_by, options_from_collection_for_select(@selectable_users, "id", "to_s", params[:received_by]), :multiple => true, :class => 'selectize-with-btn' %>
       </p>
-
+      <p>
+        <b><%= label_tag :date_from,  t('thanks.date_from') %></b>
+        <span style="white-space:nowrap;">
+          <%= text_field_tag :date_from, params[:date_from], :autocomplete => 'off', :class => "basic-text" %>
+          <%= calendar_for(:date_from) %>
+        </span>
+      </p>
+      <p>
+        <b><%= label_tag :date_to,  t('thanks.date_to') %></b>
+        <span style="white-space:nowrap;">
+          <%= text_field_tag :date_to, params[:date_to], :autocomplete => 'off', :class => "basic-text" %>
+          <%= calendar_for(:date_to) %>
+        </span>
+      </p>
       <p><%= submit_tag l('label_search') %></p>
     <% end %>
     <div class="contextual">
