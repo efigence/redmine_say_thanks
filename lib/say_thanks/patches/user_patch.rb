@@ -26,14 +26,12 @@ module SayThanks
 
           scope :with_thanks_stats, lambda { |from, to|
             end_wait_date = Thanks.quarantine_period_end.to_formatted_s(:db)
-
             select('users.id, users.firstname, users.lastname').
             select('COUNT(distinct s.id) sent').
             select('COUNT(distinct r_active.id) active').
             select('COUNT(distinct r_rewarded.id) rewarded').
             select('COUNT(distinct r_unrolled.id) unrolled').
             select('COUNT(distinct r_waiting.id) waiting').
-
             joins(append_range('LEFT OUTER JOIN thanks s ON s.sender_id = users.id', from, to)).
             joins(append_range("LEFT OUTER JOIN thanks r_active ON r_active.receiver_id = users.id AND r_active.status = 0 AND r_active.created_at <= '#{end_wait_date}'", from, to)).
             joins(append_range('LEFT OUTER JOIN thanks r_rewarded ON r_rewarded.receiver_id = users.id AND r_rewarded.status = 2', from, to)).
@@ -48,8 +46,8 @@ module SayThanks
         def append_range(clause, from, to)
           table_alias = clause.split(' ')[4]
           c = [clause]
-          c << sanitize_sql_array(["AND DATE(#{table_alias}.created_at) >= '%s'", from]) if from.present?
-          c << sanitize_sql_array(["AND DATE(#{table_alias}.created_at) <= '%s'", to])   if to.present?
+          c << sanitize_sql_array(["AND DATE(#{table_alias}.created_at) >= ?", from]) if from.present?
+          c << sanitize_sql_array(["AND DATE(#{table_alias}.created_at) <= ?", to])   if to.present?
           c.join(' ')
         end
       end
@@ -71,10 +69,6 @@ module SayThanks
           else
             Date.today
           end
-        end
-
-        def pretty_next_thanks_date
-          next_thanks_date.strftime('%d %B, %Y')
         end
 
         def manageable_thanks_group_ids

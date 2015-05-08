@@ -23,11 +23,10 @@
   <% end %>
 
 <% else %>
-  <div class="flash error" id="flash_error"><%= t('thanks.come_back', date: User.current.pretty_next_thanks_date) %></div>
+  <div class="flash error" id="flash_error"><%= t('thanks.come_back', date: User.current.next_thanks_date.strftime('%d %B, %Y')) %></div>
 <% end %>
 <%= javascript_tag do %>
 $(function(){
   $('.selectize').selectize().close();
 })
 <% end %>
-

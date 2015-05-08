@@ -10,29 +10,23 @@ class Thanks < ActiveRecord::Base
   belongs_to :reward, class_name: 'ThanksReward'
 
   validates_presence_of :sender_id, :receiver_id
-
   validate :user_can_thank_now, on: :create
-
   validate :not_rewarded_yet, if: :just_unrolled?
-
   validate :unroll_time_not_over, if: :just_unrolled?
 
   scope :persisted, -> { where "id IS NOT NULL" }
+  scope :sent_by, -> (user_ids) { where(sender_id: user_ids) }
+  scope :received_by, -> (user_ids) { where(receiver_id: user_ids) }
+  scope :status, -> (status) { where(status: status) }
 
   scope :involving, -> (user_ids) {
     where('sender_id IN (:ids) OR receiver_id IN (:ids)', ids: user_ids)
   }
 
-  scope :sent_by, -> (user_ids) { where(sender_id: user_ids) }
-
-  scope :received_by, -> (user_ids) { where(receiver_id: user_ids) }
-
-  scope :status, -> (status) { where(status: status) }
-
   scope :date_created, -> (string_date) {
     date = Date.parse(string_date)
     where(created_at: (date.beginning_of_day..date.end_of_day))
-   }
+  }
 
   scope :quarantine, -> {
     active.select(&:can_be_unrolled?)
@@ -112,7 +106,7 @@ class Thanks < ActiveRecord::Base
 
   def user_can_thank_now
     unless sender.can_give_thanks?
-      errors.add(:base, I18n.t('thanks.come_back', date: sender.pretty_next_thanks_date))
+      errors.add(:base, I18n.t('thanks.come_back', date: sender.next_thanks_date.strftime('%d %B, %Y')))
     end
   end
 end
