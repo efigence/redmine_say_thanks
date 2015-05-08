@@ -7,15 +7,12 @@
 <%= render 'shared/nav' %>
 
 <% if  User.current.can_give_thanks? %>
-
-
   <%= form_for @new_thanks, url: thanks_path do |f| %>
-
     <fieldset class="box settings" style="max-width:30%">
       <legend><strong><%= t('thanks.thank_someone') %></strong></legend>
       <p>
         <%= f.label :receiver_id, t('thanks.choose_user') %>
-        <%= f.select :receiver_id, options_from_collection_for_select(User.thankable, 'id', 'to_s'), {}, :class => 'selectize', :autofocus => false %>
+        <%= f.select :receiver_id, "<option value=''></option>".html_safe + options_from_collection_for_select(User.thankable, 'id', 'to_s'), {}, :class => 'selectize', :autofocus => false %>
       </p>
       <%= f.submit 'Submit' %>
     </fieldset>
@@ -23,7 +20,7 @@
   <% end %>
 
 <% else %>
-  <div class="flash error" id="flash_error"><%= t('thanks.come_back', date: User.current.next_thanks_date.strftime('%d %B, %Y')) %></div>
+  <h3><%= t('thanks.come_back', date: User.current.next_thanks_date.strftime('%d %B, %Y')) %></h3>
 <% end %>
 <%= javascript_tag do %>
 $(function(){

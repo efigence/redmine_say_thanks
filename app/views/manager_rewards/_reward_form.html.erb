@@ -12,7 +12,7 @@
     </p>
     <p>
       <%= f.label :user_id, t('thanks.user') %>
-      <%= f.select :user_id, options_from_collection_for_select(@users, "id", "to_s", params[:user_id]), {}, :class => 'selectize', style: 'margin-right:50px;' %>
+      <%= f.select :user_id, "<option value=''></option>".html_safe + options_from_collection_for_select(@users, "id", "to_s", params[:user_id]), {}, :class => 'selectize', style: 'margin-right:50px;' %>
     </p>
     <%= f.submit t('thanks.submit') %>
   </fieldset>
