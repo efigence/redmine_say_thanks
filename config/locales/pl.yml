@@ -30,7 +30,7 @@ pl:
     choose_user: Wybierz użytkownika
     come_back: "Przykro nam, lecz aktualnie nie możesz wysłać podziękowań. Wróć w dniu %{date}."
     rewarded: Wydane
-    sent: Wysłane punkty
+    sent: Wysłane podziękowania
     rewards: Nagrody
     points_spent: Wydane punkty
     points_cost: Liczba punktów
@@ -58,6 +58,6 @@ pl:
     date_to: Okres do
     no_manager_thanks: Nie dodano jeszcze żadnych podziękowań w tej grupie.
     no_manager_rewards: Nie dodano jeszcze żadnych nagród w tej grupie.
-    no_given_thanks: Nie dałeś jeszcze żadnych podziękowań.
+    no_given_thanks: Nie wysłałeś jeszcze żadnych podziękowań.
     no_received_thanks: Nie otrzymałeś jeszcze żadnych podziękowań.
     no_user_rewards: Nie otrzymałeś jeszcze żadnych nagród.
