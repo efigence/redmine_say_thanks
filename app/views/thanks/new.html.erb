@@ -12,7 +12,7 @@
       <legend><strong><%= t('thanks.thank_someone') %></strong></legend>
       <p>
         <%= f.label :receiver_id, t('thanks.choose_user') %>
-        <%= f.select :receiver_id, "<option value=''></option>".html_safe + options_from_collection_for_select(User.thankable, 'id', 'to_s'), {}, :class => 'selectize', :autofocus => false %>
+        <%= f.select :receiver_id, "<option value=''></option>".html_safe + options_from_collection_for_select(User.active.thankable, 'id', 'to_s'), {}, :class => 'selectize', :autofocus => false %>
       </p>
       <%= f.submit 'Submit' %>
     </fieldset>
