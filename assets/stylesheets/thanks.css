@@ -45,3 +45,24 @@ a.info {
   padding-top: 2px;
   padding-bottom: 3px;
 }
+
+#content .tabs {
+  height: auto;
+  margin-bottom: 1.2em;
+  overflow: hidden;
+  position: relative;
+}
+
+#content .tabs ul {
+    margin: 0;
+    position: relative;
+    padding-left: 0.5em;
+    border-bottom: 1px solid #bbbbbb;
+    width: auto;
+    border-bottom: 0;
+}
+
+#content .tabs ul li {
+    margin-bottom: 2px;
+    margin-right: 2px;
+}
