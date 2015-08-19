@@ -1,5 +1,8 @@
 <% content_for :header_tags do %>
   <%= stylesheet_link_tag 'thanks.css', :plugin => 'redmine_say_thanks' %>
+  <%= stylesheet_link_tag 'tipsy.css', :plugin => 'redmine_say_thanks' %>
+  <%= javascript_include_tag 'jquery.tipsy.js', :plugin => 'redmine_say_thanks' %>
+  <%= javascript_include_tag 'tooltips.js', :plugin => 'redmine_say_thanks' %>
 <% end %>
 
 <%= render 'shared/nav' %>
@@ -26,6 +29,7 @@
             <th><%= t('thanks.given_by') %></th>
             <th><%= t('thanks.date') %></th>
             <th><%= t('thanks.status') %></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -36,6 +40,11 @@
               <td><%= thank.sender.to_s %></td>
               <td><%= thank.created_at.strftime('%d-%m-%Y') %></td>
               <td><%= thank.status %></td>
+              <td class='buttons'>
+                <% if thank.description.present? %>
+                  <%= link_to 'description', '#', title: thank.description, rel: 'tipsy', class: 'info' %>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </tbody>

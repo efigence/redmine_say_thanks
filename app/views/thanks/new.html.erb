@@ -12,7 +12,12 @@
       <legend><strong><%= t('thanks.thank_someone') %></strong></legend>
       <p>
         <%= f.label :receiver_id, t('thanks.choose_user') %>
-        <%= f.select :receiver_id, "<option value=''></option>".html_safe + options_from_collection_for_select(User.active.thankable, 'id', 'to_s'), {}, :class => 'selectize', :autofocus => false %>
+        <%= f.select :receiver_id, "<option value=''></option>".html_safe + options_from_collection_for_select(User.active.thankable, 'id', 'to_s'), {}, :class => 'selectize', :autofocus => true %>
+      </p>
+      <p>
+        <%= f.label :description, 'description' %>
+        <%= f.text_area :description, cols: 70, rows: 10, autofocus: false  %>
+
       </p>
       <%= f.submit 'Submit' %>
     </fieldset>
@@ -24,6 +29,7 @@
 <% end %>
 <%= javascript_tag do %>
 $(function(){
-  $('.selectize').selectize().close();
+  $('.selectize').selectize();
+  $('#thanks_description')[0].blur();
 })
 <% end %>

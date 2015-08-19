@@ -35,3 +35,13 @@
 #content{
   overflow: visible !important;
 }
+
+a.info {
+  text-decoration: none;
+  background-image: url(../images/help.png);
+  background-position: 0% 40%;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  padding-top: 2px;
+  padding-bottom: 3px;
+}

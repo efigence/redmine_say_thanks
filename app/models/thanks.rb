@@ -3,7 +3,7 @@ class Thanks < ActiveRecord::Base
 
   enum status: [:active, :unrolled, :rewarded]
 
-  attr_accessible :receiver_id, :status
+  attr_accessible :receiver_id, :status, :description
 
   belongs_to :sender, class_name: 'User'
   belongs_to :receiver, class_name: 'User'

@@ -38,6 +38,6 @@ class ThanksController < BaseThanksController
   private
 
   def thanks_params
-    params.require(:thanks).permit(:receiver_id)
+    params.require(:thanks).permit(:receiver_id, :description)
   end
 end
